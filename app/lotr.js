@@ -1,7 +1,8 @@
 window.lotr = window.lotr || {}
 lotr = {
   // baseMap: 'http://www.elfenomeno.com/gme/getI.php?x={x}&y={y}&z={z}&m=3EN',
-  baseMap: 'http://localhost:8000/guerra/{z}/{x}/{y}.jpg',
+  //baseMap: 'http://localhost:8000/guerra/{z}/{x}/{y}.jpg',
+  baseMap: 'http://listify.es/var/arda/{z}/{x}/{y}.jpg',
   baseLayer: 'http://xabel.cartodb.com/api/v1/viz/13827/viz.json',
   round: 1,
   interval: 3000,
