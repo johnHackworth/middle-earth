@@ -5,7 +5,8 @@ lotr = {
   baseMap: 'http://listify.es/var/arda/{z}/{x}/{y}.jpg',
   baseLayer: 'http://xabel.cartodb.com/api/v1/viz/13827/viz.json',
   round: 1,
-  interval: 3000,
+  maxRound: 66,
+  interval: 2000,
   init: function(){
   // initiate leaflet map
     this.initBaseMap();
@@ -54,7 +55,11 @@ lotr = {
   },
   nextRound: function() {
     this.round++;
-    this.drawCurrentLayer();
+    if(this.round <= this.maxRound) {
+      this.drawCurrentLayer();
+    } else {
+      this.stop();
+    }
   },
   prevRound: function() {
     this.round--;
@@ -63,11 +68,11 @@ lotr = {
   autoPlay: function() {
     this.stop();
     document.getElementById('autoPlay').className = 'playing';
-    setInterval(this.nextRound.bind(this), this.interval)
+    this.interval = setInterval(this.nextRound.bind(this), this.interval)
   },
   stop: function() {
     document.getElementById('autoPlay').className = '';
-    clearInterval();
+    clearInterval(this.interval);
   },
   bindActions: function() {
     document.getElementById('nextRound').addEventListener('click', this.nextRound.bind(this));
@@ -76,8 +81,8 @@ lotr = {
     document.getElementById('stop').addEventListener('click', this.stop.bind(this));
   },
   getDate: function() {
-    var day = (this.round+21) % 30;
-    var month = (Math.floor(this.round / 30)+8) % 12;
+    var day = ((this.round+20) % 30) +1;
+    var month = (Math.floor((this.round + 22) / 30)+8) % 12;
     var month_names = [
       'january',
       'february',
