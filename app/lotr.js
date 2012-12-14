@@ -36,7 +36,9 @@ window.lotr = {
       center: [-55,-98],
       zoom: 4,
       maxZoom:8,
-      minZoon:4
+      minZoon:4,
+      fadeAnimation: false,
+
     });
     this.map.setZoom(4);
     L.tileLayer(self.baseMap, {
