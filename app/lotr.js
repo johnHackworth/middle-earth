@@ -1,25 +1,42 @@
 window.lotr = window.lotr || {}
-lotr = {
+window.lotr = {
   // baseMap: 'http://www.elfenomeno.com/gme/getI.php?x={x}&y={y}&z={z}&m=3EN',
   //baseMap: 'http://localhost:8000/guerra/{z}/{x}/{y}.jpg',
-  baseMap: 'http://listify.es/var/arda/{z}/{x}/{y}.jpg',
+  baseMap: 'http://listify.es/var/arda.big/{z}/{x}/{y}.jpg',
   baseLayer: 'http://xabel.cartodb.com/api/v1/viz/13827/viz.json',
+  baseLayerGeo: 'http://xabel.cartodb.com/api/v1/viz/15029/viz.json',
   round: 1,
+  showingOptions: false,
+  showingGeo: false,
+  synchedMovie: false,
   maxRound: 66,
-  interval: 2000,
+  interval: 5000,
+  intervalMovie: 30000,
   init: function(){
-  // initiate leaflet map
+    this.viewRef = {
+      drawer: $('#options'),
+      drawerHandle: $('#handle'),
+      geo: $('#geopolitical'),
+      timeline: $('#timeline'),
+      movie: $('#movieSynch')
+    }
     this.initBaseMap();
     this.initLayers();
+    this.initTimeline();
     this.bindActions();
+    this.toggleOptions();
+  },
+  initTimeline: function() {
+    this.viewRef.timeline.on('slidestop', this.goToTimePoint.bind(this))
+    this.viewRef.timeline.slider();
   },
   initBaseMap: function() {
     var self = this;
     this.map = new L.Map('middleEarth', {
-      center: [-60,-95],
+      center: [-55,-98],
       zoom: 4,
-      maxZoom:4,
-      minZoon:5
+      maxZoom:8,
+      minZoon:4
     });
     this.map.setZoom(4);
     L.tileLayer(self.baseMap, {
@@ -29,25 +46,61 @@ lotr = {
   initLayers: function() {
     this.drawCurrentLayer();
   },
+  bindActions: function() {
+    document.getElementById('nextRound').addEventListener('click', this.nextRound.bind(this));
+    document.getElementById('prevRound').addEventListener('click', this.prevRound.bind(this));
+    document.getElementById('autoPlay').addEventListener('click', this.autoPlay.bind(this));
+    document.getElementById('stop').addEventListener('click', this.stop.bind(this));
+    this.viewRef.drawerHandle.on('click', this.toggleOptions.bind(this));
+    this.viewRef.geo.on('click', this.toggleGeo.bind(this));
+    this.viewRef.movie.on('click', this.toggleMovie.bind(this));
+  },
+  goToTimePoint: function(ev) {
+    var position = this.viewRef.timeline.slider('value');
+    var nextRound = Math.floor(this.maxRound * position / 100)
+    this.round = nextRound
+    this.nextRound();
+  },
+  drawGeoLayer: function() {
+    var self = this;
+    if(!this.showingGeo) {
+      this.showingGeo = true;
+      cartodb.createLayer(self.map,
+        self.baseLayerGeo
+      ).on('done', function(layer) {
+          self.map.addLayer(layer);
+          self.geoLayer = layer;
+      })
+    }
+  },
+  removeGeoLayer: function() {
+    if(this.showingGeo) {
+      this.showingGeo = false;
+      this.geoLayer.remove();
+      this.geoLayer = null;
+    }
+  },
   drawCurrentLayer: function() {
     var self = this;
-
     cartodb.createLayer(self.map,
       self.getCurrentLayer(),
       {
         query: 'select * from lotr where round = ' + self.round,
+        infowindow: self.infowindow
       }
     ).on('done', function(layer) {
-
-        self.map.addLayer(layer);
-        if(self.currentLayer) {
-          self.currentLayer.remove();
-        }
-        self.currentLayer = layer;
-        document.getElementById('date').innerHTML = self.getDate();
+      self.map.addLayer(layer);
+      if(self.currentLayer) {
+        self.currentLayer.remove();
+      }
+      self.currentLayer = layer;
+      self.updateSlider();
+      document.getElementById('date').innerHTML = self.getDate();
     });
-
-
+  },
+  updateSlider: function() {
+    var percentage = 100 * this.round / this.maxRound
+    this.viewRef.timeline.slider('value', percentage);
   },
   getCurrentLayer: function() {
     var link = this.baseLayer;
@@ -65,20 +118,51 @@ lotr = {
     this.round--;
     this.drawCurrentLayer();
   },
+  getInterval: function() {
+    if(this.synchedMovie) {
+      return this.intervalMovie;
+    }
+    return this.interval;
+  },
   autoPlay: function() {
     this.stop();
     document.getElementById('autoPlay').className = 'playing';
-    this.interval = setInterval(this.nextRound.bind(this), this.interval)
+    this.currentInterval = setInterval(this.nextRound.bind(this), this.getInterval())
   },
   stop: function() {
     document.getElementById('autoPlay').className = '';
-    clearInterval(this.interval);
+    clearInterval(this.currentInterval);
   },
-  bindActions: function() {
-    document.getElementById('nextRound').addEventListener('click', this.nextRound.bind(this));
-    document.getElementById('prevRound').addEventListener('click', this.prevRound.bind(this));
-    document.getElementById('autoPlay').addEventListener('click', this.autoPlay.bind(this));
-    document.getElementById('stop').addEventListener('click', this.stop.bind(this));
+  toggleOptions: function() {
+    if(this.showingOptions) {
+      this.showingOptions = false;
+      this.viewRef.drawer.animate({'left':-180});
+    } else {
+      this.showingOptions = true;
+      this.viewRef.drawer.animate({'left':0});
+    }
+  },
+  toggleMovie: function() {
+     if(this.synchedMovie) {
+      this.viewRef.movie.removeClass('enabled');
+      this.viewRef.movie.addClass('disabled');
+      this.synchedMovie = false;
+    } else {
+      this.viewRef.movie.addClass('enabled')
+      this.viewRef.movie.removeClass('disabled');
+      this.synchedMovie = true;
+    }
+  },
+  toggleGeo: function() {
+    if(this.showingGeo) {
+      this.viewRef.geo.removeClass('enabled');
+      this.viewRef.geo.addClass('disabled');
+      this.removeGeoLayer();
+    } else {
+      this.viewRef.geo.addClass('enabled')
+      this.viewRef.geo.removeClass('disabled');
+      this.drawGeoLayer();
+    }
   },
   getDate: function() {
     var day = ((this.round+20) % 30) +1;

@@ -1,21 +1,62 @@
 ﻿<html>
   <head>
-    <link rel="stylesheet" href="styles/main.css" />
+    <link href='http://fonts.googleapis.com/css?family=Italianno' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="vendors/jquery-ui/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" />
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.css" />
-    <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
-    <script src="app/lotr.js"></script>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link href='http://fonts.googleapis.com/css?family=Cherry+Swash:700,400' rel='stylesheet' type='text/css'>
   </head>
   <body>
+    <div id="options">
+      <div id="controls">
+        <div id="variables">
+          <div class="variable">
+            <a href="#switch" id="movieSynch" class="switch disabled">
+              <span class="handle"></span>
+            </a><span class="optionLabel">Synch with movie</span>
+          </div>
+          <div class="variable">
+            <a href="#switch" id="geopolitical" class="switch disabled">
+              <span class="handle"></span>
+            </a><span class="optionLabel">Geopolitical</span>
+          </div>
+        </div>
+        <div id="timeline"></div>
+        <div id="flowControl">
+          <a id="prevRound">←</a>
+          <a id="stop">||</a>
+          <a id="autoPlay">▶</a>
+          <a id="nextRound">→</a>
+        </div>
+      </div>
+      <div id="handle">
+
+      </div>
+
+    </div>
     <div id='middleEarth'></div>
     <div id="vizTitle"><p>The Fellowship of the ring</p></div>
-    <div id="controls">
-      <div id="date"></div>
-      <div id="flowControl">
-        <a id="prevRound">←</a>
-        <a id="stop">||</a>
-        <a id="autoPlay">▶</a>
-        <a id="nextRound">→</a>
+    <div id="date"></div>
+
+    <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+    <script src="vendors/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="app/lotr.js"></script>
+    <script src="app/infowindows.js"></script>
+    <script type="text/template" id="infoTemplate">
+      <div class="cartodb-popup dark">
+        <a href="#close" class="cartodb-popup-close-button close">x</a>
+         <div class="cartodb-popup-content-wrapper">
+           <div class="cartodb-popup-cont">
+            <% if(content && content.fields) { %>
+              <div class="imgCont"><img src="./img/<%= content.fields[1].value%>.jpg" /></div>
+              <h4><%= content.fields[1].value%></h4>
+              <p><%= content.fields[2].value%></p>
+            <% } %>
+           </div>
+         </div>
+         <div class="cartodb-popup-tip-container"></div>
       </div>
-    </div>
+    </script>
   </body>
+
 </html>

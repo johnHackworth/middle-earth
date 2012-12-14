@@ -4,20 +4,52 @@
 }
 
 html, body {padding: 0; margin: 0;}
-#middleEarth { width: 100%; height:100%; background: black;}
+
+#options {
+  width: 210px;
+  float: left;
+  background-color: #333;
+  display: block;
+  height: 100%;
+  z-index: 999;
+  position:fixed;
+  padding-right: 0px;
+  padding-left: 20px;
+  left:-180px;
+  box-shadow: 3px 0 10px #221100;
+}
+#options #handle {
+  background-color: #AA8855;
+  background-image: url("../img/text2.jpg");
+  border: 2px solid #222222;
+  border-radius: 15px 15px 15px 15px;
+  float: right;
+  height: 20%;
+  margin: 5px;
+  position: absolute;
+  right: 5px;
+  top: 35%;
+  width: 20px;
+  cursor: pointer;
+}
+#middleEarth {
+  width: 100%;
+  height:100%;
+  background: white;
+}
+
+.slide {
+  margin: 10px;
+}
 
 #controls {
-  position: fixed;
-  bottom:0;
-  width: 100%;
-  background-color: #e1e1e1;
-  opacity:0.9;
-  padding:10px
+  bottom: 50px;
+  padding: 10px;
+  position: absolute;
 }
 #flowControl {
-  width:200px;
+  width:100%;
   float:left;
-  margin-left:80px;
 }
 #flowControl a {
   font-family: "fico";
@@ -37,12 +69,14 @@ html, body {padding: 0; margin: 0;}
 }
 
 #date {
-  float:right;
-  width:300px;
-  font-size: 15px;
-  font-family: verdana;
-  color: #336;
-  text-shadow: 0px 0px 3px #333;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  font-size: 25px;
+  font-family: 'Italianno', cursive;
+  color: #000;
+  text-shadow: 0px 0px 3px #553;
 }
 
 #vizTitle {
@@ -56,11 +90,140 @@ html, body {padding: 0; margin: 0;}
 #vizTitle p {
   background-color: #EDB;
   padding: 10px;
-  font-family: verdana;
-  color: #FFA;
+  font-family: 'Italianno', cursive;
+  font-size: 25px;
+  color: #000;
+  opacity: 0.80;
   text-shadow: 0px 0px 3px #553;
   border-radius: 5px;
   margin: 10px auto;
   width: 250px;
-  border: 1px solid #AAA
+  border: 1px solid #AAA;
+}
+
+#timeline {
+  width: 80%;
+  margin:30px 10%;
+
+}
+
+.ui-slider .ui-slider-handle {
+  background-color: #666666;
+  border: 1px solid #666686;
+  width: 5px;
+  top: -10px ;
+  cursor: pointer;
+}
+
+.ui-slider-horizontal {
+  height: 2px;
+}
+
+input[type="checkbox"] {
+  padding:5px;
+  border: 0;
+  border-radius: 4px;
+}
+
+.switch, .form_switch {
+    border: 1px solid #44759E;
+    border-radius: 12px 12px 12px 12px;
+    display: inline-block;
+    font-size: 0;
+    height: 15px;
+    line-height: 0;
+    position: relative;
+    text-decoration: none;
+    text-indent: -9999px;
+    text-transform: uppercase;
+    transition-duration: 180ms;
+    transition-property: background;
+    vertical-align: middle;
+    width: 29px;
+}
+.switch:before, .form_switch:before {
+    background: linear-gradient(rgba(0, 0, 0, 0.18), transparent) repeat scroll 0 0 transparent;
+    border-radius: 12px 12px 12px 12px;
+    content: " ";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+}
+.switch span.handle, .form_switch span.handle {
+    background: none repeat scroll 0 0 #F2F2F2;
+    border: 1px solid #44759E;
+    border-radius: 12px 12px 12px 12px;
+    height: 11px;
+    left: 15px;
+    position: absolute;
+    top: 1px;
+    transition-duration: 180ms;
+    transition-property: left;
+    width: 11px;
+    z-index: 2;
+}
+.switch.enabled, .form_switch.enabled {
+    background: none repeat scroll 0 0 #56AFEF;
+    border-color: #44759E;
+}
+.switch.enabled span.handle, .form_switch.enabled span.handle {
+    border-color: #44759E;
+    left: 15px;
+}
+.switch.disabled, .form_switch.disabled {
+    background: none repeat scroll 0 0 #D8D8D8;
+    border-color: #CCCCCC;
+    opacity: 1;
+}
+.switch.disabled span.handle, .form_switch.disabled span.handle {
+    border-color: #999999;
+    left: 2px;
+}
+.switch:hover, .form_switch:hover {
+    cursor: pointer !important;
+}
+.switch.working, .form_switch.working {
+    opacity: 0.5;
+}
+.switch.working:hover, .form_switch.working:hover {
+    cursor: default !important;
+}
+
+.optionLabel {
+  color: #999;
+  position: relative;
+  top: 2px;
+  margin: 0px 0 0 5px;
+  font-family: 'Italianno', cursive;
+  font-size: 24px;
+}
+
+div.cartodb-popup-cont {
+  min-height: 200px;
+}
+div.cartodb-popup .imgCont {
+  width:218px;
+  height:150px;
+  position: absolute;
+  top: -4px;
+  left: 4px;
+  border-radius: 5px 0;
+  overflow: hidden;
+}
+div.cartodb-popup img {
+  width: 218;
+}
+
+div.cartodb-popup.dark h4 {
+  position: absolute;
+  top:90px;
+  color: #eee;
+  font-size: 25px;
+  font-family: verdana;
+  text-shadow: 0px 0px 2px #111;
+  text-transform: capitalize;
+  font-family: 'Cherry Swash', cursive;
 }
