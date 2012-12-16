@@ -5,6 +5,7 @@ window.lotr = {
   baseMap: 'http://listify.es/var/arda.big/{z}/{x}/{y}.jpg',
   baseLayer: 'http://xabel.cartodb.com/api/v1/viz/13827/viz.json',
   baseLayerGeo: 'http://xabel.cartodb.com/api/v1/viz/15029/viz.json',
+  narrationUrl: 'http://xabel.cartodb.com/api/v1/sql?q=select%20*%20from%20lotr_narration',
   round: 1,
   step: 5,
   stepMovie: 1,
@@ -114,6 +115,7 @@ window.lotr = {
     return link;
   },
   nextRound: function() {
+    var prevRound = this.round;
     var step = this.step;
     if(this.synchedMovie) { step = this.stepMovie }
     this.round = this.round + step;
@@ -122,8 +124,10 @@ window.lotr = {
     } else {
       this.stop();
     }
+    this.updateNarration(this.round, this.round - prevRound);
   },
   prevRound: function() {
+    var prevRound = this.round;
     var step = this.step;
     if(this.synchedMovie) { step = this.stepMovie }
     this.round = this.round - step;
@@ -131,6 +135,24 @@ window.lotr = {
       this.drawCurrentLayer();
     } else {
       this.stop();
+    }
+    this.updateNarration(this.round, this.round - prevRound);
+  },
+  updateNarration: function(currentRound, variation) {
+    console.log(currentRound, variation)
+
+    if(variation > 0) {
+      for(i = 1; i<=variation; i++) {
+        if((currentRound + i) in this.narration) {
+          $('#vizTitle p').html(this.narration[currentRound + i]);
+        }
+      }
+    } else {
+      for(i = -1; i>=variation; i--) {
+        if((currentRound + i) in this.narration) {
+          $('#vizTitle p').html(this.narration[currentRound + i]);
+        }
+      }
     }
   },
   getInterval: function() {
@@ -205,5 +227,14 @@ window.lotr = {
   }
 
 }
-
+lotr.narration = {};
+$.ajax({
+  url: 'http://xabel.cartodb.com/api/v1/sql?q=select%20*%20from%20lotr_narration',
+  dataType: 'json',
+  success: function(res) {
+    for(var i in res.rows) {
+      lotr.narration[res.rows[i].round] = res.rows[i].description;
+    }
+  }
+})
 window.onload = lotr.init.bind(lotr);
