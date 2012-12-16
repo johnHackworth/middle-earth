@@ -17,24 +17,34 @@ class Character:
     self.speed = [0, 0]
     self.db_object = CartoDb_object(cartoPy)
   def change_heading(self, options):
-    self.heading_change = options['round']
-    self.head_lon = options['coordinates']['lon']
-    self.head_lat = options['coordinates']['lat']
+    if 'hidden' in options and options['hidden'] == True:
+      self.hidden = True
+    elif not 'stopped' in options:
+      self.hidden = False
+      self.stopped = False
+      self.heading_change = options['round']
+      self.head_lon = options['coordinates']['lon']
+      self.head_lat = options['coordinates']['lat']
+    else:
+      seld.hidden = False
+      self.stopped = True
   def step(self, current_round):
-    speed_x = (self.head_lon - self.curr_lon) / (self.heading_change - current_round)
-    speed_y = (self.head_lat - self.curr_lat) / (self.heading_change - current_round)
-    self.speed = [speed_x, speed_y]
-    self.curr_lat = self.curr_lat + speed_y
-    self.curr_lon = self.curr_lon + speed_x
+    if not self.stopped and not self.hidden:
+      speed_x = (self.head_lon - self.curr_lon) / (self.heading_change - current_round)
+      speed_y = (self.head_lat - self.curr_lat) / (self.heading_change - current_round)
+      self.speed = [speed_x, speed_y]
+      self.curr_lat = self.curr_lat + speed_y
+      self.curr_lon = self.curr_lon + speed_x
   def get_pos(self):
     return [self.curr_lon, self.curr_lat]
   def save(self, round):
-    self.db_object.set('character',self.name)
-    self.db_object.set('the_geom', '{"type":"Point", "coordinates": ['+str(self.curr_lon)+','+str(self.curr_lat)+']}');
-    self.db_object.set('round',round)
-    # self.db_object.set('date', str_date)
-    self.db_object.save()
-    return True
+    if not self.hidden:
+      self.db_object.set('character',self.name)
+      self.db_object.set('the_geom', '{"type":"Point", "coordinates": ['+str(self.curr_lon)+','+str(self.curr_lat)+']}');
+      self.db_object.set('round',round)
+      # self.db_object.set('date', str_date)
+      self.db_object.save()
+      return True
 
 class History:
   current_round = 0
@@ -53,8 +63,11 @@ class History:
     for i in range(self.current_round + 1, self.last_round):
       if i in self.rounds:
         if char.name in self.rounds[i]:
-          return {"round": i, "coordinates": self.rounds[i][char.name], "current_round": self.current_round}
-    return {"round": self.last_round, "coordinates": self.rounds[0][char.name],  "current_round": self.current_round}
+          if 'hidden' in self.rounds[i][char.name]:
+            return {"round": i, "hidden": True}
+          else:
+            return {"round": i, "coordinates": self.rounds[i][char.name], "current_round": self.current_round}
+    return {"round": self.last_round, "stopped": True,  "current_round": self.current_round}
   def proccess_round(self):
     self.current_round = self.current_round + 1
     current_round_positions = []
@@ -64,11 +77,11 @@ class History:
       char.step(self.current_round)
       while self.current_position_full(current_round_positions, char.get_pos()):
         if random.randint(0,1) > 0:
-          char.curr_lon = char.curr_lon + 0.5
+          char.curr_lon = char.curr_lon + 0.2
           print current_round_positions
           print char.get_pos()
         else:
-          char.curr_lat = char.curr_lat + 0.5
+          char.curr_lat = char.curr_lat + 0.2
           print current_round_positions
           print char.get_pos()
       current_round_positions.append(char.get_pos())

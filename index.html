@@ -9,6 +9,18 @@
   <body>
     <div id="options">
       <div id="controls">
+        <div id="flowControl">
+          <div class="line">
+            <a id="prevRound">←</a>
+            <a id="stop" class="hidden playControl">||</a>
+            <a id="autoPlay" class="playControl">▶</a>
+            <a id="nextRound">→</a>
+          </div>
+          <div class="line">
+
+          </div>
+        </div>
+
         <div id="variables">
           <div class="variable">
             <a href="#switch" id="movieSynch" class="switch disabled">
@@ -21,14 +33,10 @@
             </a><span class="optionLabel">Geopolitical</span>
           </div>
         </div>
-        <div id="timeline"></div>
-        <div id="flowControl">
-          <a id="prevRound">←</a>
-          <a id="stop">||</a>
-          <a id="autoPlay">▶</a>
-          <a id="nextRound">→</a>
-        </div>
+
       </div>
+
+
       <div id="handle">
 
       </div>
@@ -37,7 +45,13 @@
     <div id='middleEarth'></div>
     <div id="vizTitle"><p>The Fellowship of the ring</p></div>
     <div id="date"></div>
-
+    <div class="time">
+      <div id="timeline"></div>
+      <div class="timeLegend">
+        <div class="origin"> </div>
+        <div class="end"></div>
+      </div>
+    </div>
     <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
     <script src="vendors/jquery-ui/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="app/lotr.js"></script>

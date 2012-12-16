@@ -4,8 +4,12 @@
 }
 
 html, body {padding: 0; margin: 0;}
-
+.hidden {
+  display:none;
+}
 #options {
+  background: center 10% no-repeat url('../img/mellon.png');
+  background-opacity: 0.5;
   width: 210px;
   float: left;
   background-color: #333;
@@ -17,6 +21,7 @@ html, body {padding: 0; margin: 0;}
   padding-left: 20px;
   left:-180px;
   box-shadow: 3px 0 10px #221100;
+  margin: 0;
 }
 #options #handle {
   background-color: #AA8855;
@@ -44,32 +49,86 @@ html, body {padding: 0; margin: 0;}
 
 #controls {
   bottom: 50px;
-  padding: 10px;
   position: absolute;
+  width:160px;
 }
 #flowControl {
-  width:100%;
-  float:left;
+  height: 130px;
 }
+
+#flowControl .line {
+  display: inline-block;
+  width:100%;
+  min-height:30px;
+  text-align: center;
+  margin:5px 0;
+}
+
 #flowControl a {
   font-family: "fico";
-  color: #777;
+  color: #111;
+  height:30px;
+  font-size:30px;
+  margin:12.5px 0px 20px;
   cursor: pointer;
-  font-size: 20px;
-  margin-right: 20px;
 }
-#flowControl a#autoPlay.playing {
-  color: green;
+
+#flowControl a:hover {
+  color: #994;
 }
-#flowControl a#stop {
-  font-weight: bold;
-  font-family: arial;
-  position: relative;
-  top: -2px;
+
+#flowControl a.playControl {
+  font-family: "fico";
+  height:55px;
+  margin-top: 0;
+  font-size:55px;
+  color: #e1e1e1;
+}
+
+#prevRound {
+  float: left;
+}
+#nextRound {
+  float: right;
+}
+
+.time {
+  position: fixed;
+  bottom: 0;
+  width: 60%;
+  padding: 14px 20%;
+  /*background-color: #edb;*/
+  /*opacity:0.7;*/
+}
+
+#timeline {
+  width: 100%;
+  margin:0px 0% 10px;
+  border:1.5px solid #631;
+  background-color: transparent;
+  background-image: none;
+  border-radius: 1px;
+  height: 0px;
+
+}
+
+.timeLegend div {
+  font-size: 25px;
+  color: #663311;
+  font-family: 'Italianno', cursive;
+  width: 50%;
+  float: left;
+}
+
+.timeLegend .origin {
+  text-align: left;
+}
+.timeLegend .end {
+  text-align: right;
 }
 
 #date {
-  position: fixed;
+  position: relative;
   top: 0;
   right: 0;
   padding: 10px;
@@ -101,18 +160,16 @@ html, body {padding: 0; margin: 0;}
   border: 1px solid #AAA;
 }
 
-#timeline {
-  width: 80%;
-  margin:30px 10%;
 
-}
-
-.ui-slider .ui-slider-handle {
-  background-color: #666666;
-  border: 1px solid #666686;
-  width: 5px;
+.ui-slider a.ui-slider-handle {
+  background-color:  #663311;;
+  border: 1px solid #663311;;
+  width: 2px;
+  height: 20px;
+  font-size: 1px;
   top: -10px ;
   cursor: pointer;
+
 }
 
 .ui-slider-horizontal {

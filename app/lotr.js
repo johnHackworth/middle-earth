@@ -6,11 +6,13 @@ window.lotr = {
   baseLayer: 'http://xabel.cartodb.com/api/v1/viz/13827/viz.json',
   baseLayerGeo: 'http://xabel.cartodb.com/api/v1/viz/15029/viz.json',
   round: 1,
+  step: 5,
+  stepMovie: 1,
   showingOptions: false,
   showingGeo: false,
   synchedMovie: false,
-  maxRound: 66,
-  interval: 5000,
+  maxRound: 366,
+  interval: 2500,
   intervalMovie: 30000,
   init: function(){
     this.viewRef = {
@@ -29,6 +31,9 @@ window.lotr = {
   initTimeline: function() {
     this.viewRef.timeline.on('slidestop', this.goToTimePoint.bind(this))
     this.viewRef.timeline.slider();
+    $('.timeLegend .origin').html(this.getDate(1, true));
+    $('.timeLegend .end').html(this.getDate(this.maxRound, true));
+
   },
   initBaseMap: function() {
     var self = this;
@@ -97,7 +102,7 @@ window.lotr = {
       }
       self.currentLayer = layer;
       self.updateSlider();
-      document.getElementById('date').innerHTML = self.getDate();
+      document.getElementById('date').innerHTML = self.getDate(self.round);
     });
   },
   updateSlider: function() {
@@ -109,7 +114,9 @@ window.lotr = {
     return link;
   },
   nextRound: function() {
-    this.round++;
+    var step = this.step;
+    if(this.synchedMovie) { step = this.stepMovie }
+    this.round = this.round + step;
     if(this.round <= this.maxRound) {
       this.drawCurrentLayer();
     } else {
@@ -117,8 +124,14 @@ window.lotr = {
     }
   },
   prevRound: function() {
-    this.round--;
-    this.drawCurrentLayer();
+    var step = this.step;
+    if(this.synchedMovie) { step = this.stepMovie }
+    this.round = this.round - step;
+    if(this.round > 0) {
+      this.drawCurrentLayer();
+    } else {
+      this.stop();
+    }
   },
   getInterval: function() {
     if(this.synchedMovie) {
@@ -128,11 +141,13 @@ window.lotr = {
   },
   autoPlay: function() {
     this.stop();
-    document.getElementById('autoPlay').className = 'playing';
+    $('#stop').removeClass('hidden');
+    $('#autoPlay').addClass('hidden');
     this.currentInterval = setInterval(this.nextRound.bind(this), this.getInterval())
   },
   stop: function() {
-    document.getElementById('autoPlay').className = '';
+    $('#stop').addClass('hidden');
+    $('#autoPlay').removeClass('hidden');
     clearInterval(this.currentInterval);
   },
   toggleOptions: function() {
@@ -166,9 +181,9 @@ window.lotr = {
       this.drawGeoLayer();
     }
   },
-  getDate: function() {
-    var day = ((this.round+20) % 30) +1;
-    var month = (Math.floor((this.round + 22) / 30)+8) % 12;
+  getDate: function(round, short) {
+    var day = Math.floor(((round/5)+20) % 30) +1;
+    var month = (Math.floor(((round/5) + 22) / 30)+8) % 12;
     var month_names = [
       'january',
       'february',
@@ -183,7 +198,9 @@ window.lotr = {
       'november',
       'december'
     ]
-
+    if(short) {
+      return month_names[month] + ' ' + day;
+    }
     return day + ' - ' + month_names[month] + ' 3001 of the third age'
   }
 
