@@ -184,10 +184,10 @@ window.lotr = {
   toggleOptions: function() {
     if(this.showingOptions) {
       this.showingOptions = false;
-      this.viewRef.drawer.animate({'left':-180});
+      this.viewRef.drawer.addClass('replegated')
     } else {
       this.showingOptions = true;
-      this.viewRef.drawer.animate({'left':0});
+      this.viewRef.drawer.removeClass('replegated')
     }
   },
   toggleMovie: function() {
