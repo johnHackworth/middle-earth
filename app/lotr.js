@@ -39,7 +39,9 @@ window.lotr = {
   initBaseMap: function() {
     var self = this;
     this.map = new L.Map('middleEarth', {
-      center: [-55,-98],
+      // center: [-55,-98],
+      center: [-56,-98],
+      maxBounds: [[-85.058705, -176.165771], [-19.311143, 24.521484]],
       zoom: 4,
       maxZoom:8,
       minZoon:4,
