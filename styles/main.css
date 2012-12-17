@@ -1,6 +1,12 @@
 @font-face {
-  font-family: fico;
-  src: url('fico.ttf');
+  font-family: 'icon';
+  src: url('./fontawesome-webfont.eot');
+  src: url('./fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fontawesome-webfont.woff') format('woff'),
+  url('./fontawesome-webfont.ttf') format('truetype'),
+  url('./fontawesome-webfont.svg#FontAwesome') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 html, body {padding: 0; margin: 0;}
@@ -65,10 +71,10 @@ html, body {padding: 0; margin: 0;}
 }
 
 #flowControl a {
-  font-family: "fico";
+  font-family: "icon";
   color: #111;
-  height:30px;
-  font-size:30px;
+  height:50px;
+  font-size:50px;
   margin:12.5px 0px 20px;
   cursor: pointer;
 }
@@ -77,12 +83,18 @@ html, body {padding: 0; margin: 0;}
   color: #994;
 }
 
-#flowControl a.playControl {
-  font-family: "fico";
-  height:55px;
+#flowControl a#autoPlay {
+  font-family: "icon";
+  height:75px;
   margin-top: 0;
-  font-size:55px;
+  font-size:75px;
   color: #e1e1e1;
+}
+
+#flowControl a#stop {
+  position: relative;
+  top: 12.5px;
+  color: #999;
 }
 
 #prevRound {
@@ -157,6 +169,7 @@ html, body {padding: 0; margin: 0;}
   text-shadow: 0px 0px 3px #553;
   border-radius: 5px;
   border: 1px solid #AAA;
+  max-width: 600px;
 }
 
 
