@@ -175,6 +175,7 @@ window.lotr = {
     $('#stop').removeClass('hidden');
     $('#autoPlay').addClass('hidden');
     this.currentInterval = setInterval(this.nextRound.bind(this), this.getInterval())
+    this.toggleOptions();
   },
   stop: function() {
     $('#stop').addClass('hidden');

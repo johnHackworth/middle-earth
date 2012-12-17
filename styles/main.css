@@ -25,9 +25,16 @@ html, body {padding: 0; margin: 0;}
   position:fixed;
   padding-right: 0px;
   padding-left: 20px;
-  left:-180px;
+  left:0px;
   box-shadow: 3px 0 10px #221100;
   margin: 0;
+  -webkit-transition: left 0.3s linear;
+  -moz-transition: left 0.3s linear;
+  -o-transition: left 0.3s linear;
+  transition: left 0.3s linear;
+}
+#options.replegated {
+  left: -180px;
 }
 #options #handle {
   background-color: #AA8855;
@@ -296,4 +303,24 @@ div.cartodb-popup.dark h4 {
   text-shadow: 0px 0px 2px #111;
   text-transform: capitalize;
   font-family: 'Cherry Swash', cursive;
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) and (max-width : 900px){
+  #options {
+    width: 50%;
+  }
+  #controls {
+    width: 80%;
+  }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) {
+  #options {
+    width: 100%;
+  }
+  #controls {
+    width: 80%;
+  }
 }
