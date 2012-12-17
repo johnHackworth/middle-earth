@@ -74,7 +74,10 @@ window.lotr = {
     if(!this.showingGeo) {
       this.showingGeo = true;
       cartodb.createLayer(self.map,
-        self.baseLayerGeo
+        self.baseLayerGeo,
+        {
+          query: 'select * from lotr_realms where entity_type = \'city\' OR entity_type = \'place\' ',
+        }
       ).on('done', function(layer) {
           self.map.addLayer(layer);
           self.geoLayer = layer;
