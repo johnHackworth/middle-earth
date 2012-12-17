@@ -177,7 +177,7 @@ html, body {padding: 0; margin: 0;}
   text-shadow: 0px 0px 3px #553;
   border-radius: 5px;
   border: 1px solid #AAA;
-  max-width: 600px;
+  max-width: 70%;
 }
 
 
@@ -306,21 +306,58 @@ div.cartodb-popup.dark h4 {
 }
 
 /* Smartphones (landscape) ----------- */
-@media only screen and (min-width : 321px) and (max-width : 900px){
+@media only screen and (min-width : 461px) and (max-width : 900px){
   #options {
-    width: 50%;
+    width: 45%;
+    background: center center no-repeat #333 url('../img/mellon.png');
+    padding: 0;
+    padding-left: 5%;
+  }
+  #options.replegated {
+    left: -45%;
   }
   #controls {
-    width: 80%;
+    width: 70%;
+  }
+  #flowControl {
+    height: 80px;
   }
 }
 
 /* Smartphones (portrait) ----------- */
-@media only screen and (max-width : 320px) {
+@media only screen and (max-width : 460px) {
   #options {
-    width: 100%;
+    width: 95%;
+    background: center center no-repeat #333 url('../img/mellon.png');
+    padding: 0;
+    padding-left: 5%;
+  }
+  #options.replegated {
+    left: -90%;
   }
   #controls {
     width: 80%;
   }
+  #vizTitle p {
+    max-width:70%;
+  }
+  #flowControl {
+    height: 190px;
+  }
+  .timeLegend .origin, .timeLegend .end {
+    display: none;
+  }
+
+  #flowControl a#autoPlay {
+    height: 130px;
+    font-size:130px;
+  }
+
+  #flowControl a {
+    height:80px;
+    font-size:80px;
+    margin:32.5px 0px 20px;
+    cursor: pointer;
+  }
+
 }
