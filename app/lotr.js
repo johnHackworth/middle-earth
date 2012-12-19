@@ -44,15 +44,15 @@ window.lotr = {
     var self = this;
     this.map = new L.Map('middleEarth', {
       // center: [-55,-98],
-      center: [-56,-98],
+      center: [-55.45, -107],
       maxBounds: [[-85.058705, -176.165771], [-19.311143, 24.521484]],
-      zoom: 4,
+      zoom: 5,
       maxZoom:8,
       minZoon:4,
       fadeAnimation: false,
 
     });
-    this.map.setZoom(4);
+    this.map.setZoom(5);
     L.tileLayer(self.baseMap, {
       attribution: ''
     }).addTo(self.map);
