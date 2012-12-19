@@ -8,7 +8,25 @@
     <link rel="stylesheet" href="styles/main.css" />
     <link href='http://fonts.googleapis.com/css?family=Cherry+Swash:700,400' rel='stylesheet' type='text/css'>
   </head>
-  <body>
+  <body data-helpOpen="false">
+    <div class="loader">
+
+      <span><span class="icon"></span><span class="text">loading ...</span></span>
+    </div>
+    <div class="helpWindow hidden">
+      <div class="windowHeader"></div>
+      <div class="mainText">
+        <span> Welcome stranger!</span>
+        <span> I present you an interactive visualization of the travels and adventures of Frodo Baggings and his colleagues on the lands of the middle-heart. Just press play and watch, or use the timeline to check any time point</span>
+        <span> This visualization can be synched with the film, so you can play it on your tablet or laptop while you see the movie, keeping track of the whereabouts of the main characters every minute!</span>
+      </div>
+      <div class="attribution">
+        <span class="icon"></span> by <a href="http://twitter.com/johnhackworth">@johnhackworth</a>
+
+        <span class="icon"></span> fork it on <a href="">github</a>
+      </div>
+      <a href="#closePopUp" id="closePopUp">Close me</a>
+    </div>
     <div id="options">
       <div id="controls">
         <div id="flowControl">
@@ -32,7 +50,13 @@
           <div class="variable">
             <a href="#switch" id="geopolitical" class="switch disabled">
               <span class="handle"></span>
-            </a><span class="optionLabel">Geopolitical</span>
+            </a><span class="optionLabel">Show places</span>
+          </div>
+          <div class="variable">
+            <a href="#help" id="help">
+              <span class="help"></span>
+              <span class="optionLabel">Help</span>
+            </a>
           </div>
         </div>
 
@@ -74,6 +98,23 @@
          <div class="cartodb-popup-tip-container"></div>
       </div>
     </script>
+    <script type="text/template" id="infoTemplatePlace">
+      <div class="cartodb-popup dark places">
+        <a href="#close" class="cartodb-popup-close-button close">x</a>
+         <div class="cartodb-popup-content-wrapper">
+           <div class="cartodb-popup-cont">
+            <% if(content && content.fields) { %>
+
+              <h4><%= content.fields[1].value%></h4>
+              <p><%= content.fields[2].value%></p>
+              <div class="imgCont"><img src="./img/places/<%= content.fields[1].value%>.jpg" /></div>
+            <% } %>
+           </div>
+         </div>
+         <div class="cartodb-popup-tip-container"></div>
+      </div>
+    </script>
+    </div>
   </body>
 
 </html>

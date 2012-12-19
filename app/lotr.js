@@ -13,21 +13,27 @@ window.lotr = {
   showingGeo: false,
   synchedMovie: false,
   maxRound: 366,
-  interval: 2500,
+  interval: 3000,
   intervalMovie: 30000,
   init: function(){
+    $('.loader').remove();
     this.viewRef = {
       drawer: $('#options'),
       drawerHandle: $('#handle'),
       geo: $('#geopolitical'),
       timeline: $('#timeline'),
-      movie: $('#movieSynch')
+      movie: $('#movieSynch'),
+      help: $('#help'),
+      helpClose: $('.helpWindow')
     }
+
     this.initBaseMap();
     this.initLayers();
     this.initTimeline();
     this.bindActions();
     this.toggleOptions();
+    this.openPopUp();
+
   },
   initTimeline: function() {
     this.viewRef.timeline.on('slidestop', this.goToTimePoint.bind(this))
@@ -57,6 +63,7 @@ window.lotr = {
     this.drawCurrentLayer();
   },
   bindActions: function() {
+    this.viewRef.helpClose.on('click', this.closePopUp.bind(this));
     document.getElementById('nextRound').addEventListener('click', this.nextRound.bind(this));
     document.getElementById('prevRound').addEventListener('click', this.prevRound.bind(this));
     document.getElementById('autoPlay').addEventListener('click', this.autoPlay.bind(this));
@@ -64,6 +71,19 @@ window.lotr = {
     this.viewRef.drawerHandle.on('click', this.toggleOptions.bind(this));
     this.viewRef.geo.on('click', this.toggleGeo.bind(this));
     this.viewRef.movie.on('click', this.toggleMovie.bind(this));
+    this.viewRef.help.on('click', this.openPopUp.bind(this));
+
+  },
+  closePopUp: function(ev) {
+    if($('body').attr('data-helpOpen') == 'true') {
+      $('body').attr('data-helpOpen', "false")
+      $('.helpWindow').addClass('hidden')
+    }
+  },
+  openPopUp: function() {
+    console.log(1);
+    $('.helpWindow').removeClass('hidden')
+    $('body').attr('data-helpOpen', "true")
   },
   goToTimePoint: function(ev) {
     var position = this.viewRef.timeline.slider('value');
@@ -79,6 +99,7 @@ window.lotr = {
         self.baseLayerGeo,
         {
           query: 'select * from lotr_realms where entity_type = \'city\' OR entity_type = \'place\' ',
+          infowindow: self.infowindow.places
         }
       ).on('done', function(layer) {
           self.map.addLayer(layer);
@@ -99,7 +120,7 @@ window.lotr = {
       self.getCurrentLayer(),
       {
         query: 'select * from lotr where round = ' + self.round,
-        infowindow: self.infowindow
+        infowindow: self.infowindow.character
       }
     ).on('done', function(layer) {
       self.map.addLayer(layer);
