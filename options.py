@@ -23,6 +23,8 @@ places = {
   'rivendel': {'lon': -89.208983, 'lat': -54.927142},
   'caradhas': {'lon': -87.055663, 'lat': -59.95501},
   'brandywine bridge': {'lon':-113.928222, 'lat': -56.571589},
+  'erebor': {'lon': -46.098633, 'lat': -48.545705},
+  'ford of bruinen': {'lon': -90.878906, 'lat': -55.329144},
 }
 options = {}
 options['rounds'] = {
@@ -34,11 +36,24 @@ options['rounds'] = {
     'gandalf': places['hobbiton'],
     'arangorn': places['bree'],
     'legolas': places['thranduils palace'],
-    'gimli': places['iron hills'],
+    'gimli': places['erebor'],
     'boromir': places['minas tirith'],
     'nazgul1': {'hidden': True, 'lon': -115.3125, 'lat': -57.73935},
     'nazgul2': {'hidden': True, 'lon': -115.3125, 'lat': -57.73935},
     'nazgul3': {'hidden': True, 'lon': -115.3125, 'lat': -57.73935},
+    'nazgul4': {'hidden': True, 'lon': -115.3125, 'lat': -57.73935},
+    'nazgul5': {'hidden': True, 'lon': -115.3125, 'lat': -57.73935},
+    'nazgul6': {'hidden': True, 'lon': -115.3125, 'lat': -57.73935},
+    'arwen': {'hidden': True, 'lon': -89.208983, 'lat': -54.927142},
+    'saruman': {'hidden': True, 'lon': -89.824218, 'lat': -71.059798},
+    'balrog': {'hidden': True, 'lon': -84.990233, 'lat': -62.144976},
+    'white hand uruk hais': {'type': 'army', 'hidden': True, 'lon': -89.824218, 'lat': -71.059798},
+    'saruman fighting gandalf': {'hidden': True, 'lon': -89.824218, 'lat': -71.059798, 'type': 'battle'},
+    'nazgul chases hobbits': {'hidden': True, 'lon': -89.824218, 'lat': -71.059798, 'type': 'battle'},
+    'nazgul attacks hobbits': {'hidden': True, 'lon': -106.918944, 'lat': -55.40407, 'type': 'battle'},
+    'weathertop squirmish': {'hidden': True, 'lon': -100.722655, 'lat': -54.41893, 'type': 'battle'},
+    'ford of bruinen squirmish': {'hidden': True, 'lon': -90.878906, 'lat': -55.329144, 'type': 'battle'},
+    'moria battle': {'hidden': True, 'lon': -84.990233, 'lat': -62.144976, 'type': 'battle'},
   },
   5: {
     'nazgul1': places['brandywine bridge'],
@@ -62,7 +77,15 @@ options['rounds'] = {
     'sam': places['brandywine bridge'],
     'pippin': places['brandywine bridge'],
   },
+  32: {
+    'nazgul chases hobbits': {'hidden': True}
+  },
+  33: {
+    'nazgul chases hobbits': {'hidden': False},
+    'saruman': {'hidden': True},
+  },
   35: {
+    'saruman': {'hidden': False},
     'frodo': places['shire road'],
     'merry': places['shire road'],
     'sam': places['shire road'],
@@ -72,15 +95,29 @@ options['rounds'] = {
     'nazgul3': places['tuckburrow'],
     'gimli': places['old forest road end'],
   },
+  39: {
+    'nazgul chases hobbits': {'hidden': False}
+  },
+  40: {
+    'nazgul chases hobbits': {'hidden': True}
+  },
   50: {
     'frodo': places['tom bombadil'],
     'merry': places['tom bombadil'],
     'sam': places['tom bombadil'],
     'pippin': places['tom bombadil'],
   },
+  59: {
+    'saruman fighting gandalf': {'hidden': True},
+  },
   60: {
+    'saruman fighting gandalf': {'hidden': False},
     'gandalf': places['isengard'],
     'boromir': places['edoras'],
+  },
+  74: {
+    'saruman fighting gandalf': {'hidden': False},
+    'nazgul attacks hobbits': {'hidden': True},
   },
   75: {
     'frodo': places['bree'],
@@ -90,6 +127,8 @@ options['rounds'] = {
     'arangorn': places['bree'],
     'legolas': places['old forest road end'],
     'boromir': places['horeburg'],
+    'saruman fighting gandalf': {'hidden': True},
+    'nazgul attacks hobbits': {'hidden': False},
   },
   78: {
     'nazgul1': places['bree'],
@@ -101,16 +140,46 @@ options['rounds'] = {
     'pippin': places['bree'],
     'arangorn': places['bree'],
   },
+  84: {
+    'nazgul attacks hobbits': {'hidden': False},
+  },
   85: {
+    'nazgul attacks hobbits': {'hidden': True},
     'nazgul1': places['breeland'],
     'nazgul2': places['breeland'],
     'nazgul3': places['breeland'],
     'boromir': places['tharbad'],
   },
+  93: {
+    'nazgul4': {'hidden': True},
+    'nazgul5': {'hidden': True},
+    'nazgul6': {'hidden': True},
+  },
+  94: {
+    'nazgul4': {'hidden': False},
+    'nazgul5': {'hidden': False},
+    'nazgul6': {'hidden': False},
+  },
   95: {
     'nazgul1': places['bree'],
     'nazgul2': places['bree'],
     'nazgul3': places['bree'],
+    'nazgul4': places['breeland'],
+    'nazgul5': places['tharbad'],
+    'nazgul6': places['breeland'],
+    'arwen': {'hidden': True},
+  },
+  99: {
+    'arwen': {'hidden': False},
+  },
+  100: {
+    'arwen': places['rivendel'],
+  },
+  119: {
+    'weathertop squirmish': {'hidden': True},
+  },
+  120: {
+    'weathertop squirmish': {'hidden': False},
   },
   125: {
     'frodo': places['weathertop'],
@@ -121,24 +190,76 @@ options['rounds'] = {
     'nazgul1': places['weathertop'],
     'nazgul2': places['weathertop'],
     'nazgul3': places['weathertop'],
+    'nazgul4': places['weathertop'],
+    'nazgul5': places['weathertop'],
+    'nazgul6': places['weathertop'],
+  },
+  129: {
+    'weathertop squirmish': {'hidden': False},
+  },
+  130: {
+    'weathertop squirmish': {'hidden': True},
   },
   140: {
     'frodo': places['last bridge'],
     'merry': places['last bridge'],
     'sam': places['last bridge'],
+    'arwen': places['last bridge'],
     'pippin': places['last bridge'],
     'arangorn': places['last bridge'],
     'legolas': places['rivendel'],
+  },
+  141: {
     'nazgul1': places['last bridge'],
     'nazgul2': places['last bridge'],
     'nazgul3': places['last bridge'],
+    'nazgul4': places['last bridge'],
+    'nazgul5': places['last bridge'],
+    'nazgul6': places['last bridge'],
   },
-  142: {
+  149: {
+    'ford of bruinen squirmish': {'hidden': True},
+  },
+  150: {
+    'ford of bruinen squirmish': {'hidden': False},
+    'frodo': places['ford of bruinen'],
+    'arwen': places['ford of bruinen'],
+  },
+  151: {
+    'nazgul1': places['ford of bruinen'],
+    'nazgul2': places['ford of bruinen'],
+    'nazgul3': places['ford of bruinen'],
+    'nazgul4': places['ford of bruinen'],
+    'nazgul5': places['ford of bruinen'],
+    'nazgul6': places['ford of bruinen'],
+  },
+  159: {
+    'ford of bruinen squirmish': {'hidden': False},
+    'nazgul1': {'hidden': False},
+    'nazgul2': {'hidden': False},
+    'nazgul3': {'hidden': False},
+    'nazgul4': {'hidden': False},
+    'nazgul5': {'hidden': False},
+    'nazgul6': {'hidden': False},
+  },
+  160: {
+    'frodo': places['ford of bruinen'],
+    'arwen': places['ford of bruinen'],
     'nazgul1': {'hidden': True},
     'nazgul2': {'hidden': True},
     'nazgul3': {'hidden': True},
+    'nazgul4': {'hidden': True},
+    'nazgul5': {'hidden': True},
+    'nazgul6': {'hidden': True},
+    'ford of bruinen squirmish': {'hidden': True},
   },
-  160: {
+  165: {
+    'merry': places['ford of bruinen'],
+    'sam': places['ford of bruinen'],
+    'pippin': places['ford of bruinen'],
+    'arangorn': places['ford of bruinen'],
+  },
+  170: {
     'frodo': places['rivendel'],
     'merry': places['rivendel'],
     'sam': places['rivendel'],
@@ -184,6 +305,9 @@ options['rounds'] = {
     'boromir': places['caradhas'],
     'legolas': places['caradhas'],
   },
+  269: {
+    'balrog': {'hidden': True},
+  },
   270: {
     'frodo': places['moria gate'],
     'merry': places['moria gate'],
@@ -194,6 +318,12 @@ options['rounds'] = {
     'gimli': places['moria gate'],
     'boromir': places['moria gate'],
     'legolas': places['moria gate'],
+    'balrog': {'hidden': False},
+    'moria battle': {'hidden': True},
+  },
+  280: {
+    'moria battle': {'hidden': False},
+    'white hand uruk hais': {'hidden': True},
   },
   290: {
     'frodo': places['moria exit'],
@@ -205,6 +335,10 @@ options['rounds'] = {
     'gimli': places['moria exit'],
     'boromir': places['moria exit'],
     'legolas': places['moria exit'],
+    'white hand uruk hais': {'hidden': False},
+  },
+  329: {
+    'moria battle': {'hidden': False},
   },
   330: {
     'frodo': places['lorien'],
@@ -216,7 +350,12 @@ options['rounds'] = {
     'gimli': places['lorien'],
     'boromir': places['lorien'],
     'legolas': places['lorien'],
+    'balrog': {'hidden': True},
+    'moria battle': {'hidden': True},
   },
+  340: {
+    'white hand uruk hais': places['lorien'],
+  }
 }
-options['last_round'] = 330
+options['last_round'] = 350
 
