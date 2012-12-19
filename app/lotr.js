@@ -1,8 +1,6 @@
 window.lotr = window.lotr || {}
 window.lotr = {
-  // baseMap: 'http://www.elfenomeno.com/gme/getI.php?x={x}&y={y}&z={z}&m=3EN',
-  //baseMap: 'http://localhost:8000/guerra/{z}/{x}/{y}.jpg',
-  baseMap: 'http://listify.es/var/arda.big/{z}/{x}/{y}.jpg',
+  baseMap: 'http://johnhackworth.github.com/middle-earth-tiles/{z}/{x}/{y}.jpg',
   baseLayer: 'http://xabel.cartodb.com/api/v1/viz/13827/viz.json',
   baseLayerGeo: 'http://xabel.cartodb.com/api/v1/viz/15029/viz.json',
   narrationUrl: 'http://xabel.cartodb.com/api/v1/sql?q=select%20*%20from%20lotr_narration',
