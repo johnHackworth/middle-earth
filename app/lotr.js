@@ -13,6 +13,7 @@ window.lotr = {
   maxRound: 366,
   interval: 3000,
   intervalMovie: 30000,
+  characters: {},
   init: function(){
     $('.loader').remove();
     this.viewRef = {
@@ -32,6 +33,9 @@ window.lotr = {
     this.toggleOptions();
     this.openPopUp();
 
+  },
+  getSQLApiUrl: function(query) {
+    return 'http://xabel.cartodb.com/api/v1/sql?q=' + query + '&api_key=' + this.api_key
   },
   initTimeline: function() {
     this.viewRef.timeline.on('slidestop', this.goToTimePoint.bind(this))
@@ -114,23 +118,41 @@ window.lotr = {
   },
   drawCurrentLayer: function() {
     var self = this;
-    cartodb.createLayer(self.map,
-      self.getCurrentLayer(),
-      {
-        query: 'select * from lotr where round = ' + self.round,
-        infowindow: self.infowindow.character
+    $.ajax({
+      url: self.getSQLApiUrl('SELECT *, ST_AsGeoJSON(the_geom,5) as the_geom from lotr WHERE round = '+self.round),
+      dataType:'json',
+      success: self.processCurrentLayer.bind(this)
+    })
+    // cartodb.createLayer(self.map,
+    //   self.getCurrentLayer(),
+    //   {
+    //     query: 'select * from lotr where round = ' + self.round,
+    //     infowindow: self.infowindow.character
+    //   }
+    // ).on('done', function(layer) {
+    //   self.map.addLayer(layer);
+    //   if(self.currentLayer) {
+    //     self.map.removeLayer(self.currentLayer)
+    //     self.currentLayer.remove();
+    //     delete self.currentLayer;
+    //   }
+    //   self.currentLayer = layer;
+    //   self.updateSlider();
+    //   document.getElementById('date').innerHTML = self.getDate(self.round);
+    // });
+  },
+  processCurrentLayer: function(res) {
+    for(var i in res.rows) {
+      if(res.rows[i].the_geom) {
+        var pos = JSON.parse(res.rows[i].the_geom);
+        var name = res.rows[i].character;
+        if(name in this.characters) {
+          this.characters[name].setLatLng(pos.coordinates.reverse());
+        } else {
+          this.characters[name] = L.CircleMarker(pos.coordinates.reverse()).addTo(lotr.map);
+        }
       }
-    ).on('done', function(layer) {
-      self.map.addLayer(layer);
-      if(self.currentLayer) {
-        self.map.removeLayer(self.currentLayer)
-        self.currentLayer.remove();
-        delete self.currentLayer;
-      }
-      self.currentLayer = layer;
-      self.updateSlider();
-      document.getElementById('date').innerHTML = self.getDate(self.round);
-    });
+    }
   },
   updateSlider: function() {
     var percentage = 100 * this.round / this.maxRound
