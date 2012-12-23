@@ -188,7 +188,8 @@ a {text-decoration: none}
 .ui-slider a.ui-slider-handle {
   background-color:  #663311;;
   border: 1px solid #663311;;
-  width: 2px;
+  width: 20px;
+  border-radius:20px;
   height: 20px;
   font-size: 1px;
   top: -10px ;
@@ -702,4 +703,125 @@ div.helpWindow .attribution a {
     right: 42%;
     bottom: 1em;
   }
+}
+
+.event {
+  fill-opacity: 0.2;
+}
+
+.character {
+  fill-opacity: 0.8;
+  stroke-linejoin: round;
+  stroke-opacity: 0.6;
+  stroke-width: 5px;
+  width: 10px;
+}
+
+.character:hover {
+  stroke-width: 7px;
+  cursor: pointer;
+  opacity: 1;
+  -webkit-transition: stroke-width 0.1s linear;
+  -moz-transition: stroke-width 0.1s linear;
+  -o-transition: stroke-width 0.1s linear;
+  transition: stroke-width 0.1 linear;
+  -webkit-transition: opacity 0.3s linear;
+  -moz-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  transition: opacity 0.3 linear;
+  -webkit-transition: cx 0.3s linear;
+  -moz-transition: cx 0.3s linear;
+  -o-transition: cx 0.3s linear;
+  transition: cx 0.3 linear;
+}
+
+.charLabel {
+  fill: #182;
+  opacity:0.5;
+  font-size: 22px;
+  font-family: 'Italianno', cursive;
+  text-transform: uppercase;
+  -webkit-transition: fill 0.3s linear;
+  -moz-transition: fill 0.3s linear;
+  -o-transition: fill 0.3s linear;
+  transition: fill 0.3 linear;
+}
+
+.charLabel:hover {
+  opacity: 1;
+  fill: #321;
+}
+
+.charLabel.zoom4 {
+  font-size: 14px;
+}
+
+.charLabel.zoom5 {
+  font-size: 22px;
+}
+
+.charLabel.zoom6 {
+  font-size: 30px;
+}
+
+.charLabel.zoom7 {
+  font-size: 38px;
+}
+
+.charLabel.zoom8 {
+  font-size: 46px;
+}
+
+/* popups*/
+.leaflet-popup-content-wrapper {
+  width: 210px;
+  background-color: #222;
+  overflow: hidden;
+  color: #FFF;
+}
+
+.leaflet-popup-content {
+  margin: 14px 5px;
+}
+
+.leaflet-popup-content-wrapper .imgCont{
+  left: -21px;
+  overflow: hidden;
+  position: relative;
+  top: -15px;
+  width: 220px;
+}
+
+
+.leaflet-popup-tip-container {
+  position: relative;
+  top: -2px;
+}
+
+.leaflet-popup-tip {
+  background: #222;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  z-index: 3;
+}
+
+.leaflet-container h4 {
+  position: absolute;
+  top:90px;
+  color: #eee;
+  font-size: 25px;
+  font-family: verdana;
+  text-shadow: 0px 0px 2px #111;
+  text-transform: capitalize;
+  font-family: 'Cherry Swash', cursive;
+  margin: 0;
+}
+
+.leaflet-container p {
+  max-height: 100px;
+  overflow-y: scroll;
+  margin: 18px 0 -20px;
+  position: relative;
+  top: -20px;
 }

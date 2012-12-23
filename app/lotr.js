@@ -1,19 +1,22 @@
 window.lotr = window.lotr || {}
 window.lotr = {
-  baseMap: 'http://johnhackworth.github.com/middle-earth-tiles/{z}/{x}/{y}.jpg',
+  // baseMap: 'http://johnhackworth.github.com/middle-earth-tiles/{z}/{x}/{y}.jpg',
+  baseMap: 'http://listify.es/var/arda.big/{z}/{x}/{y}.jpg',
   baseLayer: 'http://xabel.cartodb.com/api/v1/viz/13827/viz.json',
   baseLayerGeo: 'http://xabel.cartodb.com/api/v1/viz/15029/viz.json',
   narrationUrl: 'http://xabel.cartodb.com/api/v1/sql?q=select%20*%20from%20lotr_narration',
   round: 1,
-  step: 3,
+  step: 1,
   stepMovie: 1,
   showingOptions: false,
   showingGeo: false,
   synchedMovie: false,
   maxRound: 366,
-  interval: 3000,
+  interval: 1000,
   intervalMovie: 30000,
+  transitionSpeed: 3300,
   characters: {},
+  events: {},
   init: function(){
     $('.loader').remove();
     this.viewRef = {
@@ -32,7 +35,6 @@ window.lotr = {
     this.bindActions();
     this.toggleOptions();
     this.openPopUp();
-
   },
   getSQLApiUrl: function(query) {
     return 'http://xabel.cartodb.com/api/v1/sql?q=' + query + '&api_key=' + this.api_key
@@ -56,10 +58,114 @@ window.lotr = {
       fadeAnimation: false,
 
     });
+
     this.map.setZoom(5);
     L.tileLayer(self.baseMap, {
       attribution: ''
     }).addTo(self.map);
+    this.map._initPathRoot()
+    this.map.on("viewreset", this.refreshCharacters.bind(this));
+  },
+  createDiamond: function(lat, lon, size, text) {
+    var self = this;
+
+    var symb =  d3.svg.symbol();
+    symb.type('diamond').size(size)
+    var LatLng = new L.LatLng(lat, lon)
+    var svg = d3.select("#middleEarth").select("svg");
+    var g = svg.append("g");
+    var feature = g.selectAll("path")
+    .data([LatLng])
+    .enter().append("svg:path")
+    .attr("d", symb)
+    .attr('type', 'diamond')
+    feature.symbol = symb;
+    feature.label = this.createLabel(svg, LatLng, text);
+    feature.update = (function() {
+      this.attr("transform", function(d) { return "translate(" +
+                          self.map.latLngToLayerPoint(d).x + "," +
+                          self.map.latLngToLayerPoint(d).y + ")"; })
+      this.label.data(this.data());
+      this.label.update();
+    }).bind(feature)
+    feature.move = (function() {
+      this
+        .transition()
+        .attr("transform", function(d) { return "translate(" +
+                          self.map.latLngToLayerPoint(d).x + "," +
+                          self.map.latLngToLayerPoint(d).y + ")"; })
+        .duration(self.transitionSpeed)
+        .delay(0)
+        .ease('linear');
+      this.label.data(this.data());
+      this.label.move();
+    }).bind(feature)
+
+    feature.update();
+    return feature;
+  },
+  createLabel: function(svg, LatLng, text) {
+    var self = this;
+    var className = text + ' charLabel zoom' + this.map.getZoom();
+    var label = svg.append("svg:text")
+    .data([LatLng])
+    .attr("transform", function(d) { return "translate(" +
+                          (self.map.latLngToLayerPoint(d).x + 18) + "," +
+                          (self.map.latLngToLayerPoint(d).y - 5) + ")";
+     })
+    .attr("dy", ".35em")
+    .attr("text-anchor", "middleclss")
+    .attr('class', className)
+    .text(function(d) { return text });
+    label.update = (function() {
+      this.attr("transform", function(d) { return "translate(" +
+                          (self.map.latLngToLayerPoint(d).x + 18) + "," +
+                          (self.map.latLngToLayerPoint(d).y - 5) + ")"; })
+    }).bind(label)
+    label.move = (function() {
+      this
+        .transition()
+        .attr("transform", function(d) { return "translate(" +
+                          (self.map.latLngToLayerPoint(d).x + 18) + "," +
+                          (self.map.latLngToLayerPoint(d).y - 5) + ")"; })
+        .duration(self.transitionSpeed)
+        .delay(0)
+        .ease('linear')
+    }).bind(label)
+
+    return label;
+  },
+  createCircle: function(lat, lon, radio, text) {
+    var self = this;
+    var svg = d3.select("#middleEarth").select("svg");
+    var g = svg.append("g");
+    var LatLng = new L.LatLng(lat, lon)
+    var feature = g.selectAll("circle")
+      .data([LatLng])
+      .enter().append("circle")
+      .attr("r", radio)
+    feature.label = this.createLabel(svg, LatLng, text);
+    feature.update = (function() {
+      this
+        .attr("cx",function(d) { return self.map.latLngToLayerPoint(d).x})
+        .attr("cy",function(d) { return self.map.latLngToLayerPoint(d).y})
+      this.label.data(this.data());
+      this.label.update();
+    }).bind(feature)
+    feature.move = (function() {
+      this
+        .transition()
+        .attr("cx",function(d) { return self.map.latLngToLayerPoint(d).x})
+        .attr("cy",function(d) { return self.map.latLngToLayerPoint(d).y})
+        .duration(self.transitionSpeed)
+        .delay(0)
+        .ease('linear')
+      this.label.data(this.data());
+      this.label.move();
+    }).bind(feature)
+
+    feature.update();
+    return feature;
   },
   initLayers: function() {
     this.drawCurrentLayer();
@@ -88,10 +194,13 @@ window.lotr = {
     $('body').attr('data-helpOpen', "true")
   },
   goToTimePoint: function(ev) {
+    var self = this;
     var position = this.viewRef.timeline.slider('value');
     var nextRound = Math.floor(this.maxRound * position / 100)
     this.round = nextRound
-    this.nextRound();
+    $.when(this.nextRound()).done(function() {
+      self.stop()
+    });
   },
   drawGeoLayer: function() {
     var self = this;
@@ -117,42 +226,120 @@ window.lotr = {
     }
   },
   drawCurrentLayer: function() {
+    var dfd = $.Deferred();
     var self = this;
-    $.ajax({
-      url: self.getSQLApiUrl('SELECT *, ST_AsGeoJSON(the_geom,5) as the_geom from lotr WHERE round = '+self.round),
-      dataType:'json',
-      success: self.processCurrentLayer.bind(this)
+    $.when(
+      $.ajax({
+        url: self.getSQLApiUrl('SELECT events.*,ST_AsGeoJSON(events.the_geom,5) as the_geom, characters.color, characters.color2  , characters.description, characters.name, characters.name_id, characters.type FROM lotr as events, lotr_characters as characters WHERE characters.name_id = events.character AND round = '+self.round),
+        dataType:'json',
+      }),
+      $.ajax({
+        url: self.getSQLApiUrl('SELECT events.*,ST_AsGeoJSON(events.the_geom,5) as the_geom FROM lotr as events WHERE type = \'battle\' AND round = '+self.round),
+        dataType:'json',
+      })
+    ).done(function(res, res2, res3) {
+      self.processCurrentLayer(res, res2, res3)
+      dfd.resolve();
     })
-    // cartodb.createLayer(self.map,
-    //   self.getCurrentLayer(),
-    //   {
-    //     query: 'select * from lotr where round = ' + self.round,
-    //     infowindow: self.infowindow.character
-    //   }
-    // ).on('done', function(layer) {
-    //   self.map.addLayer(layer);
-    //   if(self.currentLayer) {
-    //     self.map.removeLayer(self.currentLayer)
-    //     self.currentLayer.remove();
-    //     delete self.currentLayer;
-    //   }
-    //   self.currentLayer = layer;
-    //   self.updateSlider();
-    //   document.getElementById('date').innerHTML = self.getDate(self.round);
-    // });
+    return dfd.promise();
   },
-  processCurrentLayer: function(res) {
+  removeHiddenCharacters: function(res) {
+    for(var c in this.characters) {
+      var found = false;
+      for(var i in res.rows) {
+        if(res.rows[i].name_id == c) {
+          found = true
+        }
+      }
+      if(!found) {
+        this.deleteCharacter(c)
+      }
+    }
+  },
+  processCurrentLayer: function(res, resEvents) {
+    res = res[0];
+    var self = this;
+    this.updateSlider();
+    this.currentRes = res;
+    if(resEvents) {
+      this.processCurrentEvents(resEvents[0]);
+    }
+    this.removeHiddenCharacters(res);
     for(var i in res.rows) {
       if(res.rows[i].the_geom) {
         var pos = JSON.parse(res.rows[i].the_geom);
-        var name = res.rows[i].character;
-        if(name in this.characters) {
-          this.characters[name].setLatLng(pos.coordinates.reverse());
+        var name = res.rows[i].name;
+        var name_id = res.rows[i].name_id;
+        var desc = res.rows[i].description;
+        var type = res.rows[i].type;
+        var color = res.rows[i].color ? res.rows[i].color : '#FF5555';
+        var color2= res.rows[i].color2 ? res.rows[i].color2 : '#333';
+        if(name_id in this.characters) {
+          lotr.characters[name_id]
+            .data( [new L.LatLng(pos.coordinates[1],pos.coordinates[0])])
+          lotr.characters[name_id].move()
+          this.characters[name_id].latLng = new L.LatLng(pos.coordinates[1], pos.coordinates[0])
+
         } else {
-          this.characters[name] = L.CircleMarker(pos.coordinates.reverse()).addTo(lotr.map);
+          var size = ((this.map.getZoom()/3) * 100);
+          if(type=='character') {
+            this.characters[name_id] = lotr.createCircle(pos.coordinates[1], pos.coordinates[0], size/20, name)
+          } else {
+            this.characters[name_id] = lotr.createDiamond(pos.coordinates[1], pos.coordinates[0], size,name)
+          }
+          this.characters[name_id].description = desc;
+          this.characters[name_id].name = name;
+          this.characters[name_id].latLng = new L.LatLng(pos.coordinates[1], pos.coordinates[0])
+          this.characters[name_id].on('mousedown', function() {
+            L.popup({autoPan: true})
+              .setLatLng(this.data()[0])
+              .setContent(
+                _.template($('#infoTemplate').html(), {name:this.name, description: this.description})
+              )
+            .openOn(self.map);
+          }.bind(this.characters[name_id]))
+
+          this.characters[name_id]
+            .attr('fill',color)
+            .attr('stroke',color2)
+            .attr('class','character')
+            .attr('name', name)
         }
       }
     }
+  },
+  processCurrentEvents: function(res) {
+    for(var e in this.events) {
+      this.deleteEvent(e);
+    }
+    for(var i in res.rows) {
+      if(res.rows[i].the_geom) {
+        var pos = JSON.parse(res.rows[i].the_geom);
+        var name_id = res.rows[i].character;
+        var desc = res.rows[i].description;
+        var type = res.rows[i].type;
+        var size = ((this.map.getZoom()/3) * 600);
+        this.events[name_id] = lotr.createCircle(pos.coordinates[1], pos.coordinates[0], size/20, name_id)
+        this.events[name_id].attr('fill',"#FF5555")
+            .attr('class','event')
+        }
+    }
+  },
+  deleteEvent: function(ev) {
+    this.events[ev].label.remove();
+    this.events[ev].remove();
+    delete this.events[ev]
+  },
+  deleteCharacter: function(characterName) {
+    this.characters[characterName].label.remove();
+    this.characters[characterName].remove();
+    delete this.characters[characterName]
+  },
+  refreshCharacters: function() {
+    for(var c in this.characters) {
+      this.deleteCharacter(c)
+    };
+    this.processCurrentLayer([this.currentRes])
   },
   updateSlider: function() {
     var percentage = 100 * this.round / this.maxRound
@@ -163,6 +350,7 @@ window.lotr = {
     return link;
   },
   nextRound: function() {
+    var dfd = $.Deferred();
     if(this.round === 1) {
       this.showCurrentNarration(1)
     }
@@ -171,11 +359,13 @@ window.lotr = {
     if(this.synchedMovie) { step = this.stepMovie }
     this.round = this.round + step;
     if(this.round <= this.maxRound) {
-      this.drawCurrentLayer();
+      $.when(this.drawCurrentLayer()).done(dfd.resolve)
     } else {
       this.stop();
+      dfd.resolve();
     }
     this.updateNarration(this.round, this.round - prevRound);
+    return dfd.promise();
   },
   prevRound: function() {
     var prevRound = this.round;
@@ -224,6 +414,7 @@ window.lotr = {
     $('#stop').addClass('hidden');
     $('#autoPlay').removeClass('hidden');
     clearInterval(this.currentInterval);
+    this.refreshCharacters();
   },
   toggleOptions: function() {
     if(this.showingOptions) {
