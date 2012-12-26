@@ -774,7 +774,7 @@ div.helpWindow .attribution a {
 
 .charLabel {
   fill: #162;
-  opacity:0.8;
+  opacity:0.5;
   font-size: 22px;
   font-family: 'Italianno', cursive;
   text-transform: capitalize;
@@ -783,6 +783,10 @@ div.helpWindow .attribution a {
   -moz-transition: fill 0.3s linear;
   -o-transition: fill 0.3s linear;
   transition: fill 0.3 linear;
+}
+
+.leaflet-map-pane:hover .charLabel {
+  opacity: 0.8;
 }
 
 .charLabel:hover {
