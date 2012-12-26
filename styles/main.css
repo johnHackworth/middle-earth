@@ -9,6 +9,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'ring';
+  src:  url('./RINGM___.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html, body {padding: 0; margin: 0;}
 a {text-decoration: none}
 .hidden {
@@ -217,7 +224,7 @@ input[type="checkbox"] {
     position: relative;
     text-decoration: none;
     text-indent: -9999px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     transition-duration: 180ms;
     transition-property: background;
     vertical-align: middle;
@@ -350,6 +357,10 @@ div.cartodb-popup.dark h4 {
 div.cartodb-popup.dark.places h4 {
   top:0;
   position: relative;
+  font-family: ring, verdana;
+  text-transform: lowercase;
+  font-size: 20px;
+  width: 100%;
 }
 div.cartodb-popup p {
   margin-top: 130px;
@@ -366,6 +377,8 @@ div.cartodb-popup.places p {
   max-width: 290px;
   overflow-y: scroll;
   width: 290px;
+  position: relative;
+  top: 1em;
 }
 
 div.helpWindow {
@@ -376,7 +389,7 @@ div.helpWindow {
   border: 1px solid #421;
   border-radius: 5px;
   display: block;
-  height: 50%;
+  max-height: 50%;
   left: 20%;
   padding: 5%;
   position: fixed;
@@ -395,6 +408,10 @@ div.helpWindow {
   opacity: 0.95;
 }
 
+div.mainText {
+  display: inline-block;
+  margin-bottom: 1em;
+}
 div.helpWindow.hidden {
   opacity:0;
   top: -3000px;
@@ -418,7 +435,8 @@ div.helpWindow h1 {
   text-align: center;
 }
 div.helpWindow .mainText span {
-  font-size: 24px;
+  font-size: 16px;
+  font-family: 'ring';
   width: 100%;
   float: left;
 }
@@ -428,7 +446,7 @@ div.helpWindow #closePopUp {
   padding: 3px 10px;
   border-radius: 2px;
   color: #431;
-  font-size: 25px;
+  font-size: 20px;
   position: absolute;
   bottom: 1em;
   right: 20px;
@@ -441,6 +459,7 @@ div.helpWindow .attribution {
   left: 60px;
   font-size: 22px;
   color: #631;
+  font-family: italianno, ring;
 }
 
 div.helpWindow .attribution a {
@@ -448,6 +467,9 @@ div.helpWindow .attribution a {
   margin-right: 2em;
 }
 
+#closePopUp {
+  font-family: ring;
+}
 .loader {
   width: 100%;
   height: 100%;
@@ -710,14 +732,29 @@ div.helpWindow .attribution a {
 }
 
 .character {
-  fill-opacity: 0.8;
+  fill-opacity: 0.9;
   stroke-linejoin: round;
-  stroke-opacity: 0.6;
+  stroke-opacity: 1;
   stroke-width: 5px;
   width: 10px;
 }
 
-.character:hover {
+.foe {
+  fill-opacity: 0.9;
+  stroke-linejoin: round;
+  stroke-opacity: 1;
+  stroke-width: 3px;
+  width: 10px;
+}
+
+.army {
+  fill-opacity: 0.5;
+  stroke-linejoin: round;
+  stroke-opacity: 1;
+  stroke-width: 3px;
+}
+
+.character:hover, .foe:hover {
   stroke-width: 7px;
   cursor: pointer;
   opacity: 1;
@@ -736,11 +773,12 @@ div.helpWindow .attribution a {
 }
 
 .charLabel {
-  fill: #182;
-  opacity:0.5;
+  fill: #162;
+  opacity:0.8;
   font-size: 22px;
   font-family: 'Italianno', cursive;
-  text-transform: uppercase;
+  text-transform: capitalize;
+  cursor: pointer;
   -webkit-transition: fill 0.3s linear;
   -moz-transition: fill 0.3s linear;
   -o-transition: fill 0.3s linear;
@@ -749,6 +787,7 @@ div.helpWindow .attribution a {
 
 .charLabel:hover {
   opacity: 1;
+  font-weight: bold;
   fill: #321;
 }
 
@@ -789,9 +828,13 @@ div.helpWindow .attribution a {
   overflow: hidden;
   position: relative;
   top: -15px;
-  width: 220px;
+  width: 228px;
+  border-radius: 10px 10px 0 0;
 }
 
+.leaflet-popup-content-wrapper .imgCont img {
+  width: 100%;
+}
 
 .leaflet-popup-tip-container {
   position: relative;
@@ -808,13 +851,14 @@ div.helpWindow .attribution a {
 
 .leaflet-container h4 {
   position: absolute;
-  top:90px;
+  top:100px;
+  height: 1em;
+  text-overflow: ellipsis;
   color: #eee;
-  font-size: 25px;
-  font-family: verdana;
+  font-size: 18px;
   text-shadow: 0px 0px 2px #111;
   text-transform: capitalize;
-  font-family: 'Cherry Swash', cursive;
+  font-family: 'ring', verdana;
   margin: 0;
 }
 

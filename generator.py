@@ -6,7 +6,7 @@ from vendors.pyCartoDb.cartodb_object import CartoDb_object
 cartoPy = Cartodb('xabel')
 all_table = cartoPy.at('lotr').open()
 class Character:
-  import_version = 6
+  import_version = 17
   def __init__(self, options):
     self.name = options['name']
     self.hidden = True
@@ -21,7 +21,7 @@ class Character:
     self.curr_lat = self.setted_lat
     self.head_lon = self.setted_lon
     self.head_lat = self.setted_lat
-    self.heading_change = 1
+    self.heading_change = 0
     self.speed = [0, 0]
     self.db_object = CartoDb_object(cartoPy)
   def change_heading(self, options):
@@ -68,6 +68,12 @@ class History:
     self.rounds = options['rounds'];
     self.last_round = options['last_round']
     self.initCharacters()
+  def init_char(self, name, round):
+    char_options = {'name': name, 'lon': round[name]['lon'], 'lat': round[name]['lat']}
+    if 'type' in round[name]:
+      char_options['type'] = round[name]['type'];
+    char = Character(char_options)
+    self.characters.append(char)
   def initCharacters(self):
     self.characters = []
     for name in self.rounds[1]:
@@ -83,7 +89,6 @@ class History:
           if 'hidden' in self.rounds[self.current_round][char.name]:
             if self.rounds[self.current_round][char.name]['hidden'] == True:
               hidden = True
-
     for i in range(self.current_round + 1, self.last_round):
       if i in self.rounds:
         if char.name in self.rounds[i]:
@@ -92,19 +97,36 @@ class History:
           else:
             return {"round": i, "hidden": hidden, "stopped": True, "current_round": self.current_round}
     return {"round": self.last_round, "hidden": hidden, "stopped": True,  "current_round": self.current_round}
+  def get_char_by_name(self, char_name):
+    for char in self.characters:
+      if char.name == char_name:
+        return char
+    return None
   def proccess_round(self):
     self.current_round = self.current_round + 1
     current_round_positions = []
+    if self.current_round in self.rounds:
+      for char_name in self.rounds[self.current_round]:
+        char = self.get_char_by_name(char_name)
+        if char is None:
+          self.init_char(char_name, self.rounds[self.current_round])
     for char in self.characters:
-      if char.heading_change == self.current_round:
+      if char.heading_change == self.current_round or char.heading_change == 0:
         char.change_heading(self.get_char_heading(char))
       char.step(self.current_round)
-      while self.current_position_full(current_round_positions, char.get_pos()):
-        if random.randint(0,1) > 0:
-          char.curr_lon = char.curr_lon + 0.2
-        else:
-          char.curr_lat = char.curr_lat + 0.2
-      current_round_positions.append(char.get_pos())
+      if not (char.type == 'battle' or char.type == 'skirmish' or char.type == 'army'):
+        while self.current_position_full(current_round_positions, char.get_pos()):
+          if random.randint(0,1) > 0:
+            if self.current_round < 100:
+              char.curr_lon = char.curr_lon + 1
+            else:
+              char.curr_lon = char.curr_lon + 0.5
+          else:
+            if self.current_round < 100:
+              char.curr_lat = char.curr_lat + 1
+            else:
+              char.curr_lat = char.curr_lat + 0.5
+        current_round_positions.append(char.get_pos())
       if not self.simulate:
         char.save(self.current_round)
       # else:

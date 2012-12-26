@@ -1,7 +1,7 @@
 ﻿<html>
   <head>
-    <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, sinitial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title> The fellowship of the ring</title>
     <link href='http://fonts.googleapis.com/css?family=Italianno' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="vendors/jquery-ui/css/ui-lightness/jquery-ui-1.9.2.custom.min.css" />
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.css" />
@@ -43,6 +43,17 @@
 
         <div id="variables">
           <div class="variable">
+            <a href="#switch" id="autozoom" class="switch disabled">
+              <span class="handle"></span>
+            </a><span class="optionLabel">No zoom to action</span>
+          </div>
+
+          <div class="variable">
+            <a href="#switch" id="autopan" class="switch disabled">
+              <span class="handle"></span>
+            </a><span class="optionLabel">No auto-move</span>
+          </div>
+          <div class="variable">
             <a href="#switch" id="movieSynch" class="switch disabled">
               <span class="handle"></span>
             </a><span class="optionLabel">Synch with movie</span>
@@ -50,7 +61,7 @@
           <div class="variable">
             <a href="#switch" id="geopolitical" class="switch disabled">
               <span class="handle"></span>
-            </a><span class="optionLabel">Show places</span>
+            </a><span class="optionLabel">Hide places</span>
           </div>
           <div class="variable">
             <a href="#help" id="help">
@@ -86,7 +97,7 @@
     <script src="app/infowindows.js"></script>
     <script type="text/template" id="infoTemplate">
        <div class="popup-cont">
-          <div class="imgCont"><img src="./img/<%= name%>.jpg" /></div>
+          <div class="imgCont"><img src="./img/<%= id%>.jpg" /></div>
           <h4><%= name %></h4>
           <p><%= description %></p>
        </div>

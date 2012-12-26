@@ -38,57 +38,58 @@ places = {
 options = {}
 options['rounds'] = {
   1: {
+    'sauron': places['barad-dur'],
+    'elrond': places['minas morgul'],
+    'isildur': places['minas morgul'],
   },
-  10: {
-    'sauron': places['barad-dur']
-  },
-  20: {
+  4: {
     'elrond': places['barad-dur'],
     'isildur': places['barad-dur'],
     'siege of barad-dur': {'lon': places['barad-dur']['lon'], 'lat': places['barad-dur']['lat'], 'type': 'battle'}
   },
-  30: {
-    'sauron': {'hidden': False},
+  7: {
+    'sauron': {'hidden': False}
   },
-  40: {
+  8: {
     'sauron': {'hidden': True},
-    'siege of barad-dur': {'hiden': True},
+    'siege of barad-dur': {'hidden': True},
     'elrond': places['barad-dur'],
     'isildur': places['barad-dur'],
   },
-  45: {
+  9: {
     'isildur': places['gladden fields'],
     'elrond': places['rivendell']
   },
-  50: {
-    'isildur': {'hidden': True},
+  10: {
+    'isildur': places['gladden fields'],
     'gollum': places['gladden fields'],
   },
-  55: {
+  11: {
+    'isildur': {'hidden': True},
     'gollum': places['goblin town'],
     'bilbo': places['hobbiton']
   },
-  60: {
+  12: {
     'gollum': {'hidden': True},
     'bilbo': places['goblin town'],
   },
-  65: {
+  13: {
     'bilbo': places['erebor']
   },
-  70: {
+  14: {
     'bilbo': places['hobbiton'],
     'frodo': places['buckland']
   },
-  75: {
+  15: {
     'sauron': {'hidden': False},
     'gandalf': places['buckland'],
     'frodo': places['buckland']
   },
-  110: {
+  19: {
     'gandalf': places['hobbiton'],
     'frodo': places['hobbiton']
   },
-  150: {
+  30: {
     'pippin': places['hobbiton'],
     'merry': places['hobbiton'],
     'sam': places['hobbiton'],
@@ -96,43 +97,42 @@ options['rounds'] = {
     'gandalf': places['hobbiton'],
     'frodo': places['hobbiton']
   },
-  225: {
+  45: {
     'bilbo': places['hobbiton']
   },
-  230: {
+  46: {
     'bilbo': places['brandywine bridge'],
     'gandalf': places['hobbiton']
   },
-  240: {
-    'bilbo': places['rivendell']
+  48: {
+    'saruman': places['isengard'],
+    'gandalf': places['bree'],
   },
-  241: {
-    'bilbo': {'hidden': True},
+  49: {
+    'bilbo': places['bree'],
     'boromir': places['minas tirith'],
-    'gandalf': places['tharbad']
   },
-  260: {
+  51: {
     'nazgul1': places['barad-dur'],
+    'gandalf': places['tharbad'],
     'nazgul2': places['barad-dur'],
     'nazgul3': places['minas morgul'],
   },
-  264: {
+  52: {
     'nazgul1': places['minas morgul'],
     'nazgul2': places['minas morgul'],
     'nazgul3': places['minas morgul'],
-  },
-  265: {
     'gandalf': places['minas tirith']
   },
-  270: {
-    'gandalf': places['minas tirith']
-  },
-  275: {
+  55: {
+    'bilbo': places['rivendell'],
+    'gandalf': places['minas tirith'],
     'nazgul1': places['isengard'],
     'nazgul2': places['isengard'],
     'nazgul3': places['isengard'],
   },
-  280: {
+  56: {
+    'bilbo': {'hidden': True},
     'gandalf': places['hobbiton'],
     'sam': places['hobbiton'],
     'frodo': places['hobbiton'],
@@ -140,44 +140,60 @@ options['rounds'] = {
     'pippin': places['tuckburrow'],
     'boromir': places['edoras']
   },
-  325: {
+  58: {
+    'nazgul1': places['tharbad'],
+    'nazgul2': places['tharbad'],
+    'nazgul3': places['tharbad'],
+  },
+  62: {
+    'nazgul1': places['bree'],
+    'nazgul2': places['bree'],
+    'nazgul3': places['bree'],
+  },
+  65: {
     'nazgul1': places['brandywine bridge'],
     'nazgul2': places['brandywine bridge'],
     'nazgul3': places['brandywine bridge'],
   },
-  350: {
+  70: {
     'gandalf': places['hobbiton'],
     'sam': places['hobbiton'],
     'frodo': places['hobbiton'],
   },
-  360: {
+  72: {
     'gandalf': places['tharbad']
   },
-  370: {
+  74: {
     'gandalf': places['isengard']
   },
-  380: {
+  76: {
     'nazgul1': places['hobbiton'],
     'nazgul2': places['tuckburrow'],
     'nazgul3': places['buckland'],
   },
-  405: {
+  81: {
     'gandalf fights saruman': {'type': 'battle', 'lon': places['isengard']['lon'], 'lat': places['isengard']['lat'] }
   },
-  420: {
+  83: {
+    'gandalf fights saruman': {'hidden': True},
+    'saruman': places['isengard']
+  },
+  84: {
     'pippin': places['shire fields'],
     'merry': places['shire fields'],
     'frodo': places['shire fields'],
     'sam': places['shire fields'],
+    'saruman2': places['isengard'],
+    'saruman': {'hidden': True}
   },
-  440: {
+  88: {
     'pippin': places['shire fields'],
     'merry': places['shire fields'],
     'frodo': places['shire fields'],
     'sam': places['shire fields'],
     'nazgul3': places['shire fields'],
   },
-  450: {
+  90: {
     'pippin': places['shire fields'],
     'merry': places['shire fields'],
     'frodo': places['shire fields'],
@@ -185,10 +201,10 @@ options['rounds'] = {
     'nazgul3': places['shire fields'],
     'legolas': places['thranduils palace'],
   },
-  455: {
+  91: {
     'nazgul3': places['shire road']
   },
-  470: {
+  94: {
     'gimli': places['erebor'],
     'pippin': places['buckland'],
     'merry': places['buckland'],
@@ -198,12 +214,12 @@ options['rounds'] = {
     'nazgul2': places['buckland'],
     'nazgul3': places['buckland'],
   },
-  475: {
+  95: {
     'nazgul1': places['brandywine bridge'],
     'nazgul2': places['brandywine bridge'],
     'nazgul3': places['brandywine bridge'],
   },
-  480: {
+  96: {
     'aragorn': places['bree'],
     'pippin': places['bree'],
     'merry': places['bree'],
@@ -213,27 +229,27 @@ options['rounds'] = {
     'nazgul2': places['buckland'],
     'nazgul3': places['buckland'],
   },
-  515: {
+  103: {
     'legolas': places['old forest road end'],
     'nazgul1': places['buckland'],
     'nazgul2': places['buckland'],
     'nazgul3': places['buckland'],
   },
-  530: {
+  106: {
     'nazgul1': places['bree'],
     'nazgul2': places['bree'],
     'nazgul3': places['bree'],
   },
-  535: {
+  107: {
     'nazguls attack hobbits': {'type': 'battle', 'lat': places['bree']['lat'], 'lon': places['bree']['lon']},
   },
-  540: {
+  108: {
     'nazgul1': places['bree'],
     'nazgul2': places['bree'],
     'nazgul3': places['bree'],
     'nazguls attack hobbits': {'hidden': True}
   },
-  545: {
+  109: {
     'gimli': places['old forest road end'],
     'aragorn': places['bree'],
     'pippin': places['bree'],
@@ -241,12 +257,12 @@ options['rounds'] = {
     'frodo': places['bree'],
     'sam': places['bree'],
   },
-  560: {
+  112: {
     'nazgul1': places['breeland'],
     'nazgul2': places['breeland'],
     'nazgul3': places['breeland'],
   },
-  580: {
+  116: {
     'aragorn': places['weathertop'],
     'pippin': places['weathertop'],
     'merry': places['weathertop'],
@@ -257,24 +273,24 @@ options['rounds'] = {
     'nazgul3': places['bree road'],
     'boromir': places['tharbad']
   },
-  585: {
+  117: {
     'nazgul1': places['bree road'],
     'nazgul2': places['bree road'],
     'nazgul3': places['bree road'],
     'nazgul4': places['bree road'],
     'nazgul5': places['bree road'],
   },
-  590: {
+  118: {
     'nazgul1': places['weathertop'],
     'nazgul2': places['weathertop'],
     'nazgul3': places['weathertop'],
     'nazgul4': places['weathertop'],
     'nazgul5': places['weathertop'],
   },
-  595: {
+  119: {
     'Nazgul attack hobbits on dol guldur': {'type': 'battle', 'lon': places['weathertop']['lon'], 'lat': places['weathertop']['lat']},
   },
-  620: {
+  124: {
     'nazgul1': places['weathertop'],
     'nazgul2': places['weathertop'],
     'nazgul3': places['weathertop'],
@@ -288,7 +304,7 @@ options['rounds'] = {
     'arwen': places['rivendell'],
     'Nazgul attack hobbits on dol guldur': {'hidden': True}
   },
-  655: {
+  131: {
     'aragorn': places['last bridge'],
     'pippin': places['last bridge'],
     'merry': places['last bridge'],
@@ -296,7 +312,7 @@ options['rounds'] = {
     'sam': places['last bridge'],
     'arwen': places['last bridge'],
   },
-  670: {
+  134: {
     'aragorn': places['last bridge'],
     'pippin': places['last bridge'],
     'merry': places['last bridge'],
@@ -304,7 +320,7 @@ options['rounds'] = {
     'sam': places['last bridge'],
     'arwen': places['last bridge'],
   },
-  673: {
+  135: {
     'nazgul1': places['last bridge'],
     'nazgul2': places['last bridge'],
     'nazgul3': places['last bridge'],
@@ -315,10 +331,10 @@ options['rounds'] = {
     'nazgul8': places['last bridge'],
     'nazgul9': places['last bridge'],
   },
-  680: {
+  136: {
     'gandalf': places['isengard']
   },
-  690: {
+  138: {
     'nazgul1': places['ford of bruinen'],
     'nazgul2': places['ford of bruinen'],
     'nazgul3': places['ford of bruinen'],
@@ -332,7 +348,7 @@ options['rounds'] = {
     'arwen': places['ford of bruinen'],
     'arwen faces nazgul': {'type': 'battle', 'lon': places['ford of bruinen']['lon'], 'lat': places['ford of bruinen']['lat']}
   },
-  710: {
+  142: {
     'nazgul1': places['ford of bruinen'],
     'nazgul2': places['ford of bruinen'],
     'nazgul3': places['ford of bruinen'],
@@ -345,7 +361,7 @@ options['rounds'] = {
     'frodo': places['ford of bruinen'],
     'arwen': places['ford of bruinen'],
   },
-  715: {
+  143: {
     'arwen faces nazgul': {'hidden': True},
     'nazgul1': {'hidden': True},
     'nazgul2': {'hidden': True},
@@ -364,24 +380,24 @@ options['rounds'] = {
     'frodo': places['rivendell'],
     'gandalf': places['rivendell']
   },
-  720: {
+  144: {
     'aragorn': places['rivendell'],
     'pippin': places['rivendell'],
     'merry': places['rivendell'],
     'sam': places['rivendell'],
     'boromir': places['last bridge']
   },
-  770: {
+  154: {
     'boromir': places['rivendell'],
   },
-  775: {
+  155: {
     'gimli': places['rivendell'],
     'legolas': places['rivendell'],
   },
-  900: {
+  180: {
     'arwen': places['rivendell']
   },
-  910: {
+  182: {
     'arwen': {'hidden': True},
     'aragorn': places['rivendell'],
     'pippin': places['rivendell'],
@@ -393,7 +409,7 @@ options['rounds'] = {
     'boromir': places['rivendell'],
     'gimli': places['rivendell'],
   },
-  940: {
+  188: {
     'aragorn': places['rivendell road'],
     'pippin': places['rivendell road'],
     'merry': places['rivendell road'],
@@ -404,7 +420,7 @@ options['rounds'] = {
     'boromir': places['rivendell road'],
     'gimli': places['rivendell road'],
   },
-  985: {
+  197: {
     'aragorn': places['caradhas'],
     'pippin': places['caradhas'],
     'merry': places['caradhas'],
@@ -415,7 +431,7 @@ options['rounds'] = {
     'boromir': places['caradhas'],
     'gimli': places['caradhas'],
   },
-  1020: {
+  204: {
     'aragorn': places['moria gate'],
     'pippin': places['moria gate'],
     'merry': places['moria gate'],
@@ -426,7 +442,7 @@ options['rounds'] = {
     'boromir': places['moria gate'],
     'gimli': places['moria gate'],
   },
-  1045: {
+  209: {
     'aragorn': places['moria'],
     'pippin': places['moria'],
     'merry': places['moria'],
@@ -437,19 +453,19 @@ options['rounds'] = {
     'boromir': places['moria'],
     'gimli': places['moria'],
   },
-  1110: {
+  222: {
     'moria orcs attack the fellowship': {'type': 'battle', 'lon': places['moria']['lon'], 'lat': places['moria']['lat']}
   },
-  1170: {
+  234: {
     'balrog': places['moria']
   },
-  1175: {
+  235: {
     'moria orcs attack the fellowship': {'hidden': True}
   },
-  1220: {
+  244: {
     'balrog fights gandalf': {'type': 'battle', 'lon': places['khazad-dum']['lon'], 'lat': places['khazad-dum']['lat']}
   },
-  1225: {
+  245: {
     'aragorn': places['khazad-dum'],
     'pippin': places['khazad-dum'],
     'merry': places['khazad-dum'],
@@ -461,7 +477,7 @@ options['rounds'] = {
     'gimli': places['khazad-dum'],
     'balrog': places['khazad-dum']
   },
-  1240: {
+  248: {
     'aragorn': places['khazad-dum'],
     'pippin': places['khazad-dum'],
     'merry': places['khazad-dum'],
@@ -474,7 +490,7 @@ options['rounds'] = {
     'balrog': places['khazad-dum'],
     'balrog fights gandalf': {'hidden': True}
   },
-  1280: {
+  256: {
     'galadriel': places['lorien'],
     'aragorn': places['lorien'],
     'pippin': places['lorien'],
@@ -487,10 +503,10 @@ options['rounds'] = {
     'gandalf': places['khazad-dum'],
     'balrog': places['khazad-dum']
   },
-  1380: {
+  276: {
     'white hand army': {'type': 'army', 'lon': places['isengard']['lon'], 'lat': places['isengard']['lat']}
   },
-  1390: {
+  278: {
     'galadriel': places['lorien'],
     'aragorn': places['lorien'],
     'pippin': places['lorien'],
@@ -503,7 +519,7 @@ options['rounds'] = {
     'gandalf': places['khazad-dum'],
     'balrog': places['khazad-dum']
   },
-  1430: {
+  286: {
     'aragorn': places['nen hithoel'],
     'pippin': places['nen hithoel'],
     'merry': places['nen hithoel'],
@@ -513,7 +529,7 @@ options['rounds'] = {
     'boromir': places['nen hithoel'],
     'gimli': places['nen hithoel'],
   },
-  1480: {
+  296: {
     'aragorn': places['nen hithoel'],
     'pippin': places['nen hithoel'],
     'merry': places['nen hithoel'],
@@ -524,10 +540,10 @@ options['rounds'] = {
     'gimli': places['nen hithoel'],
     'white hand army': places['nen hithoel']
   },
-  1490: {
+  298: {
     'white hand orcs attack the fellowship': {'type': 'battle', 'lat': places['nen hithoel']['lat'], 'lon': places['nen hithoel']['lon']}
   },
-  1540: {
+  308: {
     'boromir': places['nen hithoel'],
     'pippin': places['nen hithoel'],
     'merry': places['nen hithoel'],
@@ -536,25 +552,40 @@ options['rounds'] = {
     'aragorn': places['nen hithoel'],
     'white hand army': places['nen hithoel']
   },
-  1570: {
+  314: {
     'boromir': places['nen hithoel'],
     'legolas': places['nen hithoel'],
     'gimli': places['nen hithoel'],
     'aragorn': places['nen hithoel'],
   },
-  1575: {
-    'boromir': {'hidden': True}
+  315: {
+    'boromir': {'hidden': True},
+    'balrog': {'hidden': True},
+    'gandalf': {'hidden': True},
+    'white hand orcs attack the fellowship': {'hidden': True},
   },
-  1600: {
+  320: {
     'sam': places['nen hithoel'],
     'frodo': places['nen hithoel'],
   },
-  1625: {
+  325: {
     'boromir': places['nen hithoel'],
     'legolas': places['nen hithoel'],
     'gimli': places['nen hithoel'],
   },
-  1900: {
+  349: {
+    'aragorn': places['isengard'],
+    'legolas': places['isengard'],
+    'gimli': places['isengard'],
+    'sam': places['barad-dur'],
+    'frodo': places['barad-dur'],
+    'aragorn': places['rivendell'],
+    'pippin': places['isengard'],
+    'merry': places['isengard'],
+    'boromir': places['minas tirith'],
+    'white hand army': places['isengard']
+  },
+  350: {
     'aragorn': places['isengard'],
     'legolas': places['isengard'],
     'gimli': places['isengard'],
