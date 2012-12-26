@@ -434,7 +434,7 @@ window.lotr = {
           this.characters[name_id]
             .attr('fill',color)
             .attr('stroke',color2)
-            .attr('class','character')
+            .attr('class',type)
             .attr('name', name)
         }
       }
