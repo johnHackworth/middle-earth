@@ -510,7 +510,7 @@ div.helpWindow .attribution a {
     border-radius: 3px;
     font-family: 'Italianno', cursive;
     width: 80%;
-    left:10%;
+    left:15%;
   }
 
   .end, .origin {
@@ -582,7 +582,7 @@ div.helpWindow .attribution a {
 @media only screen and (max-width : 460px) {
   #vizTitle p {
     width: 76%;
-    left:12%;
+    left:15%;
   }
 
 
@@ -663,6 +663,34 @@ div.helpWindow .attribution a {
     font-size: 25px;
     right: 40%;
   }
+}
+
+/* mobile ----------- */
+@media only screen and (max-width : 599px) and (max-height: 799px){
+#vizTitle {
+  text-align:none;
+}
+
+#vizTitle p {
+  font-size: 20px;
+  width: 70%;
+  margin-left:10%;
+}
+
+div.helpWindow {
+  border-radius: 0;
+  max-height: 90%;
+  top: 0;
+  left: 0%;
+  width: 90%;
+  padding: 5%;
+}
+
+
+  div.helpWindow span {
+    font-size: 12px !important;
+  }
+
 }
 
 
