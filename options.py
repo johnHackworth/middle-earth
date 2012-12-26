@@ -39,6 +39,8 @@ options = {}
 options['rounds'] = {
   1: {
     'sauron': places['barad-dur'],
+  },
+  3: {
     'elrond': places['minas morgul'],
     'isildur': places['minas morgul'],
   },
@@ -569,7 +571,7 @@ options['rounds'] = {
     'frodo': places['nen hithoel'],
   },
   325: {
-    'boromir': places['nen hithoel'],
+    'aragorn': places['nen hithoel'],
     'legolas': places['nen hithoel'],
     'gimli': places['nen hithoel'],
   },
@@ -579,10 +581,9 @@ options['rounds'] = {
     'gimli': places['isengard'],
     'sam': places['barad-dur'],
     'frodo': places['barad-dur'],
-    'aragorn': places['rivendell'],
+    'aragorn': places['isengard'],
     'pippin': places['isengard'],
     'merry': places['isengard'],
-    'boromir': places['minas tirith'],
     'white hand army': places['isengard']
   },
   350: {
@@ -592,15 +593,10 @@ options['rounds'] = {
     'sam': places['barad-dur'],
     'frodo': places['barad-dur'],
     'elrond': places['rivendell'],
-    'arwen': places['rivendell'],
-    'bilbo': places['rivendell'],
     'galadriel': places['lorien'],
     'aragorn': places['rivendell'],
     'pippin': places['isengard'],
     'merry': places['isengard'],
-    'gandalf': places['lorien'],
-    'balrog': places['moria'],
-    'boromir': places['minas tirith'],
     'white hand army': places['isengard']
   }
 }

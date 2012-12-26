@@ -6,7 +6,7 @@ from vendors.pyCartoDb.cartodb_object import CartoDb_object
 cartoPy = Cartodb('xabel')
 all_table = cartoPy.at('lotr').open()
 class Character:
-  import_version = 17
+  import_version = 21
   def __init__(self, options):
     self.name = options['name']
     self.hidden = True
@@ -118,14 +118,11 @@ class History:
         while self.current_position_full(current_round_positions, char.get_pos()):
           if random.randint(0,1) > 0:
             if self.current_round < 100:
-              char.curr_lon = char.curr_lon + 1
+              char.curr_lon = char.curr_lon + 0.7
             else:
               char.curr_lon = char.curr_lon + 0.5
           else:
-            if self.current_round < 100:
-              char.curr_lat = char.curr_lat + 1
-            else:
-              char.curr_lat = char.curr_lat + 0.5
+            char.curr_lat = char.curr_lat + 0.3
         current_round_positions.append(char.get_pos())
       if not self.simulate:
         char.save(self.current_round)
