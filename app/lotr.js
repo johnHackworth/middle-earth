@@ -8,6 +8,7 @@ window.lotr = {
   narrationSource: null,
   round: 25,
   _MIN_ZOOM: 3,
+  _CENTER: [-69, -80],
   step: 1,
   stepMovie: 1,
   showingOptions: false,
@@ -96,7 +97,7 @@ window.lotr = {
   initBaseMap: function() {
     var self = this;
     this.map = new L.Map('middleEarth', {
-      center: [-65, -80],
+      center: this._CENTER,
       maxBounds: [[-85.02070, -179.648438], [-43.068888, 83.847656]],
       zoom: 4,
       maxZoom:7,
@@ -106,7 +107,10 @@ window.lotr = {
     });
     // HACKATTACK!!! for some reason I need to investigate the 'load' leaflet event doesn't work
     // don't kill me for this, please, this is a spare time project ;D
-    setTimeout(function(){self.map.setZoom(4);},350);
+    setTimeout(function(){
+      self.map.panTo(self._CENTER);
+      self.map.setZoom(4);
+    },350);
     L.tileLayer(self.baseMap, {
       attribution: ''
     }).addTo(self.map);
